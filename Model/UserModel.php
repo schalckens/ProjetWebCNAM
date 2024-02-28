@@ -26,6 +26,7 @@ class UserModel
 
     public function update($id, $username, $mail, $isAdmin, $password) {
         $sql = "UPDATE user SET username = ?, mail = ?, isAdmin = ?, password = ? WHERE id = ?";
+
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$username, $mail, $isAdmin, password_hash($password, PASSWORD_DEFAULT), $id]);
     }
