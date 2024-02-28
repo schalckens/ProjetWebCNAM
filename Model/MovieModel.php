@@ -1,14 +1,15 @@
 <?php
 
 namespace Model;
-
+use PdoProjetWeb;
 use \PDO;
 
 class MovieModel
 {
-    public function __construct(PDO $db)
-    {
-        $this->db = $db;
+    private $db;
+
+    public function __construct() {
+        $this->db = PdoProjetWeb::getPdoProjetWeb();
     }
 
     public function create($title, $releaseDate, $overview, $posterPath, $originalLanguage)
@@ -26,11 +27,11 @@ class MovieModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($title, $releaseDate, $overview, $posterPath, $originalLanguage) 
+    public function update($id, $title, $releaseDate, $overview, $posterPath, $originalLanguage) 
     {
         $sql = "UPDATE movie SET title = ?, releaseDate = ?, overview = ?, posterPath = ?, originalLanguage = ? WHERE id = ?";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage]);
+        return $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage, $id]);
     }
 
     public function delete($id)

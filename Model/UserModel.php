@@ -17,6 +17,7 @@ class UserModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$username, $mail, $isAdmin, password_hash($password, PASSWORD_DEFAULT)]);
     }
+
     public function read($id) {
         $sql = "SELECT * FROM user WHERE id = ?";
         $stmt = $this->db->prepare($sql);
@@ -26,10 +27,10 @@ class UserModel
 
     public function update($id, $username, $mail, $isAdmin, $password) {
         $sql = "UPDATE user SET username = ?, mail = ?, isAdmin = ?, password = ? WHERE id = ?";
-
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$username, $mail, $isAdmin, password_hash($password, PASSWORD_DEFAULT), $id]);
     }
+    
     public function delete($id) {
         $sql = "DELETE FROM user WHERE id = ?";
         $stmt = $this->db->prepare($sql);
