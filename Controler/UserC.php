@@ -2,7 +2,6 @@
 
 namespace Controler;
 use Model\UserModel;
-use PdoProjetWeb;
 
 class UserC
 {
@@ -29,6 +28,9 @@ class UserC
                 echo "Veuillez remplir tous les champs.";
             }
         }
+        else{
+            include 'View/register.php';
+        }
     }
 
     public function login()
@@ -42,14 +44,27 @@ class UserC
                 $user = $this->userModel->findByUsername($username);
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['user_id'] = $user['id'];
-                    echo "Connexion réussie.";
-                    header('Location: index.php?uc=accueil'); // Redirige vers la page d'accueil
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['is_admin'] = $user['isAdmin']; // Supposons que 'isAdmin' est le champ qui indique si l'utilisateur est admin
+                    
+                    // Vérifier si l'utilisateur est un administrateur
+                    if ($user['isAdmin']) {
+                        // Redirige vers le back office pour les administrateurs
+                        header('Location: index.php?uc=backoffice');
+                    } else {
+                        // Redirige vers la page d'accueil pour les utilisateurs
+                        header('Location: index.php?uc=accueil');
+                    }
+                    exit(); // bonne pratique après un header
                 } else {
                     echo "Identifiants incorrects.";
                 }
             } else {
                 echo "Veuillez remplir tous les champs.";
             }
+        }
+        else{
+            include 'View/login.php';
         }
     }
 
