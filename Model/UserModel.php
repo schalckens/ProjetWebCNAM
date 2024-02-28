@@ -27,7 +27,7 @@ class UserModel
     public function update($id, $username, $mail, $isAdmin, $mdp) {
         $sql = "UPDATE users SET username = ?, mail = ?, isAdmin = ?, mdp = ? WHERE id = ?";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$username, $mail, $isAdmin, password_hash($mdp, PASSWORD_DEFAULT), $id])
+        return $stmt->execute([$username, $mail, $isAdmin, password_hash($mdp, PASSWORD_DEFAULT), $id]);
     }
     public function delete($id) {
         $sql = "DELETE FROM users WHERE id = ?";
