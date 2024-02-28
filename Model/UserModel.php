@@ -34,6 +34,13 @@ class UserModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
     }
+    
+    public function findByUsername($username) {
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 }
 
