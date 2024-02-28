@@ -1,6 +1,7 @@
 <?php
 
 namespace Controler;
+use Model\UserModel;
 
 class UserC
 {
