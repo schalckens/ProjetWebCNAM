@@ -1,6 +1,6 @@
-<form method="POST" action="userC.php/register">
+<form method="POST" action="../index.php?uc=register">
     <input type="text" name="username" placeholder="Nom d'utilisateur" required>
     <input type="email" name="mail" placeholder="Email" required>
-    <input type="password" name="mdp" placeholder="Mot de passe" required>
+    <input type="password" name="password" placeholder="Mot de passe" required>
     <button type="submit">Créer un compte</button>
 </form>
