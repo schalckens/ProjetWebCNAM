@@ -46,6 +46,21 @@ class TMDB {
       return $genres;
     }
 
+    public static function getMovie($movieID){
+      $details = self::getDetails($movieID);
+      $directors = self::getDirectors($movieID);
+      $genres = self::getGenres($movieID);
+      return [
+        'title' => $details->title,
+        'release_date' => $details->release_date,
+        'original_language' => $details->original_language,
+        'overview' => $details->overview,
+        'poster_path' => $details->poster_path,
+        'directors' => $directors,
+        'genres' => $genres,
+      ];
+    }
+
 
     public static function getRequest($url){
       $response = self::getInstance()->request('GET', $url, [
