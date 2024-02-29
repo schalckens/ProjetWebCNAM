@@ -58,5 +58,30 @@ class UserModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function saveVerificationToken($id, $verificationToken)
+    {
+        $sql = "UPDATE user SET verification_token = :verificationToken WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':verificationToken', $verificationToken);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function getUserByToken($token)
+    {
+        $sql = "SELECT * FROM user WHERE verification_token = :token LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['token' => $token]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function markEmailAsVerified($id)
+    {
+        $sql = "UPDATE user SET is_verified = 1, verification_token = NULL WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['userId' => $id]);
+    }
+
+
 }
 

@@ -24,24 +24,35 @@ $movieController = new Controler\MovieControler();
 
 // Définition des routes
 
+// Affiche la page d'accueil
 $router->addRoute('GET', '/', function() {
     include 'View/accueil.php';
 });
+$router->addRoute('GET', '/accueil', function() {
+    include 'View/accueil.php';
+});
+
+// Affiche la page de connexion
 $router->addRoute('GET', '/login', function() {
     include 'View/login.php';
 });
 $router->addRoute('POST', '/login', function() use ($userController) {
     $userController->login();
 });
+
+// Affiche la page d'inscription
 $router->addRoute('GET', '/register', function() {
     include 'View/register.php';
 });
 $router->addRoute('POST', '/register', function() use ($userController) {
     $userController->register();
 });
-$router->addRoute('GET', '/accueil', function() {
-    include 'View/accueil.php';
+
+// Page de vérification mail
+$router->addRoute('GET', '/verify', function() use ($userController) {
+    $userController->verifyEmail($_GET['token']);
 });
+
 // Affiche la page de gestion des utilisateurs
 $router->addRoute('GET', '/manageUser', function() use ($userController) {
     $userController->manageUsers();
@@ -69,15 +80,20 @@ $router->addRoute('GET', '/backoffice', function() {
     include 'View/backOffice.php';
 });
 
+// Affiche la page de gestion des films
 $router->addRoute('GET', '/manageMovie', function() {
     include 'View/manageMovie.php';
 });
+
+// Ajoute un film
 $router->addRoute('GET', '/manageMovie/add/:id', function($id) use ($movieController) {
     $movieController->addMovie($id);
 });
 $router->addRoute('POST', '/manageMovie/add/:id', function($id) use ($movieController) {
     $movieController->addMovie($id);
 });
+
+// Cherche des films
 $router->addRoute('POST', '/manageMovie', function() use ($movieController) {
     $movieController->search();
 });
