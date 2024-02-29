@@ -1,7 +1,7 @@
 
 <main>
     <h1>Modifier l'Utilisateur</h1>
-    <form action="index.php?uc=manageUser&action=edit&id=<?php echo htmlspecialchars($user['id']); ?>" method="post">
+    <form action="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>" method="post">
         <div>
             <label for="username">Nom d'utilisateur:</label>
             <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>

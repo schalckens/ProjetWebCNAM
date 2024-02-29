@@ -24,7 +24,7 @@ class UserC
                 $isAdmin = false; // Par défaut, l'utilisateur n'est pas un administrateur.
                 $this->userModel->create($username, $mail, $isAdmin, $password);
                 echo "Compte créé avec succès. Vous pouvez maintenant vous connecter.";
-                header('Location: index.php?uc=accueil'); // Redirige vers la page de connexion
+                header('Location: /accueil'); // Redirige vers la page de connexion
             } else {
                 echo "Veuillez remplir tous les champs.";
             }
@@ -50,10 +50,10 @@ class UserC
                     // Vérifier si l'utilisateur est un administrateur
                     if ($user['isAdmin']) {
                         // Redirige vers le back office pour les administrateurs
-                        header('Location: index.php?uc=backoffice');
+                        header('Location: /backoffice');
                     } else {
                         // Redirige vers la page d'accueil pour les utilisateurs
-                        header('Location: index.php?uc=accueil');
+                        header('Location: /accueil');
                     }
                     exit(); // bonne pratique après un header
                 } else {
@@ -81,7 +81,7 @@ class UserC
 
             if ($success) {
                 $_SESSION['success_message'] = 'Utilisateur ajouté avec succès.';
-                header('Location: index.php?uc=manageUser');
+                header('Location: /manageUser');
                 exit();
             } else {
                 $_SESSION['error_message'] = 'Échec de l\'ajout de l\'utilisateur. Veuillez réessayer.';
@@ -106,7 +106,7 @@ class UserC
 
             $this->userModel->update($id, $username, $mail, $isAdmin, $password);
 
-            header('Location: index.php?uc=manageUser');
+            header('Location: /manageUser');
             exit();
         } else {
             // Si le formulaire n'a pas été soumis, récupérer les informations de l'utilisateur pour pré-remplir le formulaire
@@ -120,7 +120,7 @@ class UserC
     {
         $this->userModel->delete($id);
 
-        header('Location: index.php?uc=manageUser');
+        header('Location: /manageUser');
         exit();
     }
 

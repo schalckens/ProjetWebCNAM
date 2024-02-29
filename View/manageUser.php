@@ -4,7 +4,7 @@
     <!-- Formulaire pour ajouter un nouvel utilisateur -->
     <section>
         <h2>Ajouter un utilisateur</h2>
-        <form action="index.php?uc=manageUser&action=add" method="post">
+        <form action="/manageUser/add" method="post">
             <input type="text" name="username" placeholder="Nom d'utilisateur" required>
             <input type="email" name="mail" placeholder="Email" required>
             <input type="password" name="password" placeholder="Mot de passe" required>
@@ -48,9 +48,8 @@
                             <?php echo $user['isAdmin'] ? 'Oui' : 'Non'; ?>
                         </td>
                         <td>
-                            <a
-                                href="index.php?uc=manageUser&action=edit&id=<?php echo htmlspecialchars($user['id']); ?>">Modifier</a>
-                            <a href="index.php?uc=manageUser&action=delete&id=<?php echo htmlspecialchars($user['id']); ?>"
+                            <a href="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>">Modifier</a>
+                            <a href="/manageUser/delete/<?php echo htmlspecialchars($user['id']); ?>"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                         </td>
                     </tr>

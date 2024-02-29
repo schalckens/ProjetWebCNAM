@@ -11,11 +11,11 @@
 <header>
     <nav>
         <ul>
-            <li><a href="index.php?uc=accueil">Accueil</a></li>
-                <li><a href="index.php?uc=login">Connexion</a></li>
-                <li><a href="index.php?uc=register">Inscription</a></li>
-                <li><a href="index.php?uc=game">Jeu</a></li>
-                <li><a href="index.php?uc=disconnect">Déconnexion</a></li>
+            <li><a href="/accueil">Accueil</a></li>
+                <li><a href="/login">Connexion</a></li>
+                <li><a href="/register">Inscription</a></li>
+                <li><a href="/game">Jeu</a></li>
+                <li><a href="/disconnect">Déconnexion</a></li>
         </ul>
     </nav>
 </header>

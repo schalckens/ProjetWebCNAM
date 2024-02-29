@@ -3,47 +3,67 @@ session_start();
 require_once 'Includes/pdo.php';
 require 'Controler/UserC.php';
 require 'Model/UserModel.php';
+require 'router.php';
 
-$uc = filter_input(INPUT_GET, 'uc', FILTER_DEFAULT);
 
 // Entête de la page
 require 'View/header.php';
 
-// Routage vers le contrôleur approprié en fonction de l'action demandée
-switch ($uc) {
-    case 'register':
-        $userController = new Controler\UserC();
-        $userController->register();
-        break;
-    case 'login':
-        $userController = new Controler\UserC();
-        $userController->login();
-        break;
-    case 'backoffice':
-        include 'View/backOffice.php';
-        break;
-    case 'manageUser':
-        $action = filter_input(INPUT_GET, 'action', FILTER_DEFAULT);
-        $id = filter_input(INPUT_GET, 'id', FILTER_DEFAULT);
+// Création d'une instance du routeur
+$router = new Router();
 
-        if ($action === 'add') {
-            $userController = new Controler\UserC();
-            $userController->addUser();
-        } elseif ($action === 'edit' && $id) {
-            $userController = new Controler\UserC();
-            $userController->editUser($id);
-        }elseif ($action === 'delete' && $id) {
-            $userController = new Controler\UserC();
-            $userController->deleteUser($id);
-        } else {
-            $userController = new Controler\UserC();
-            $userController->manageUsers();
-        }
-        break;
-    case 'accueil':
-    default: // Page d'accueil par défaut
-        include 'Controler/AccueilC.php';
-        break;
+// Obtention de l'instance du contrôleur
+$userController = new Controler\UserC();
+
+// Définition des routes
+
+$router->addRoute('GET', '/login', function() {
+    include 'View/login.php';
+});
+$router->addRoute('POST', '/login', function() use ($userController) {
+    $userController->login();
+});
+$router->addRoute('GET', '/register', function() {
+    include 'View/register.php';
+});
+$router->addRoute('POST', '/register', function() use ($userController) {
+    $userController->register();
+});
+$router->addRoute('GET', '/accueil', function() {
+    include 'View/accueil.php';
+});
+// Affiche la page de gestion des utilisateurs
+$router->addRoute('GET', '/manageUser', function() use ($userController) {
+    $userController->manageUsers();
+});
+
+// Ajoute un utilisateur
+$router->addRoute('POST', '/manageUser/add', function() use ($userController) {
+    $userController->addUser();
+});
+
+// Modifie un utilisateur
+$router->addRoute('GET', '/manageUser/edit/:id', function($id) use ($userController) {
+    $userController->editUser($id);
+});
+$router->addRoute('POST', '/manageUser/edit/:id', function($id) use ($userController) {
+    $userController->editUser($id);
+});
+
+
+// Supprime un utilisateur
+$router->addRoute('GET', '/manageUser/delete/:id', function($id) use ($userController) {
+    $userController->deleteUser($id);
+});
+$router->addRoute('GET', '/backoffice', function() {
+    include 'View/backOffice.php';
+});
+
+try {
+    $router->matchRoute();
+} catch (Exception $e) {
+    // Gestion des erreurs si aucune route ne correspond
+    echo "Erreur : " . $e->getMessage();
 }
 // Pied de la page
 require 'View/footer.php';
