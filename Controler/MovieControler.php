@@ -18,26 +18,47 @@ class MovieControler
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $movieName = $_POST['movieName'] ?? null;
             if ($movieName) {
-                $moviesSearch = TMDB::searchMovies($movieName);
-                include 'View/manageMovie.php';
+                $_SESSION['movieSearch'] = TMDB::searchMovies($movieName);
+                //$moviesSearch = TMDB::searchMovies($movieName);
+                $this->manageMovies();
             } else {
                 echo "Veuillez saisir un nom de film.";
             }
         } else {
-            include 'View/manageMovie.php';
+            $this->manageMovies();
         }
+    }
+
+    public function clearSearch()
+    {
+        $_SESSION['movieSearch'] = [];
+        $this->manageMovies();
     }
 
     public function addMovie($id)
     {
         $movie = TMDB::getMovie($id);
-       
-        $movieModel = new MovieModel();
-        $movieDate = date('Y-m-d', strtotime($movie['release_date']));
 
-        $success = $movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $movie['poster_path'], $movie['original_language']);
+        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $movie['poster_path'], $movie['original_language']);
 
-        echo $success ? 'Film ajouté' : 'Erreur lors de l\'ajout du film';
+        if (!$success) {
+            throw new \Exception('Erreur lors de l\'ajout du film');
+        }
+        $this->manageMovies();
+    }
+
+    public function deleteMovie($id)
+    {
+        $success = $this->movieModel->delete($id);
+        if (!$success) {
+            throw new \Exception('Erreur lors de la suppression du film');
+        }
+        $this->manageMovies();
+    }
+
+    public function manageMovies()
+    {
+        $_SESSION['movies'] = $this->movieModel->getAllMovies();
         include 'View/manageMovie.php';
     }
 }
