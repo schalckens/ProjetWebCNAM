@@ -24,6 +24,9 @@ $movieController = new Controler\MovieControler();
 
 // Définition des routes
 
+$router->addRoute('GET', '/', function() {
+    include 'View/accueil.php';
+});
 $router->addRoute('GET', '/login', function() {
     include 'View/login.php';
 });
@@ -66,11 +69,17 @@ $router->addRoute('GET', '/backoffice', function() {
     include 'View/backOffice.php';
 });
 
-$router->addRoute('POST', '/manageMovie/add', function($id) use ($movieController) {
+$router->addRoute('GET', '/manageMovie', function() {
+    include 'View/manageMovie.php';
+});
+$router->addRoute('GET', '/manageMovie/add/:id', function($id) use ($movieController) {
     $movieController->addMovie($id);
 });
-$router->addRoute('POST', '/manageMovie', function($id) use ($movieController) {
-    $movieController->search($id);
+$router->addRoute('POST', '/manageMovie/add/:id', function($id) use ($movieController) {
+    $movieController->addMovie($id);
+});
+$router->addRoute('POST', '/manageMovie', function() use ($movieController) {
+    $movieController->search();
 });
 
 try {
