@@ -1,10 +1,15 @@
 <?php
 session_start();
 require_once 'Includes/pdo.php';
+
+require_once 'Includes/TMDB.php';
+require_once('vendor/autoload.php');
+
 require 'Controler/UserC.php';
 require 'Model/UserModel.php';
 require 'router.php';
-
+require 'Controler/MovieControler.php';
+require 'Model/MovieModel.php';
 
 // Entête de la page
 require 'View/header.php';
@@ -12,8 +17,10 @@ require 'View/header.php';
 // Création d'une instance du routeur
 $router = new Router();
 
+
 // Obtention de l'instance du contrôleur
 $userController = new Controler\UserC();
+$movieController = new Controler\MovieControler();
 
 // Définition des routes
 
@@ -57,6 +64,13 @@ $router->addRoute('GET', '/manageUser/delete/:id', function($id) use ($userContr
 });
 $router->addRoute('GET', '/backoffice', function() {
     include 'View/backOffice.php';
+});
+
+$router->addRoute('POST', '/manageMovie/add', function($id) use ($movieController) {
+    $movieController->addMovie($id);
+});
+$router->addRoute('POST', '/manageMovie', function($id) use ($movieController) {
+    $movieController->search($id);
 });
 
 try {

@@ -14,7 +14,7 @@ class MovieModel
 
     public function create($title, $releaseDate, $overview, $posterPath, $originalLanguage)
     {
-        $sql = "INSERT INTO movie (title, releaseDate, overview, posterPath, originalLanguage) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO movie (title, release_date, overview, poster_path, original_language) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage]);
     }
