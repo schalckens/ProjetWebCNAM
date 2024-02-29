@@ -18,10 +18,28 @@ switch ($uc) {
     case 'login':
         $userController = new Controler\UserC();
         $userController->login();
-
         break;
     case 'backoffice':
         include 'View/backOffice.php';
+        break;
+    case 'manageUser':
+        $action = filter_input(INPUT_GET, 'action', FILTER_DEFAULT);
+        $id = filter_input(INPUT_GET, 'id', FILTER_DEFAULT);
+
+        if ($action === 'add') {
+            $userController = new Controler\UserC();
+            $userController->addUser();
+        } elseif ($action === 'edit' && $id) {
+            $userController = new Controler\UserC();
+            $userController->editUser($id);
+        }elseif ($action === 'delete' && $id) {
+            $userController = new Controler\UserC();
+            $userController->deleteUser($id);
+        } else {
+            $userController = new Controler\UserC();
+            $userController->manageUsers();
+        }
+        break;
     case 'accueil':
     default: // Page d'accueil par défaut
         include 'Controler/AccueilC.php';
