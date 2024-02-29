@@ -6,6 +6,6 @@
     </section>
     <section>
         <h2>Gestion des films</h2>
-        <p><a href="index.php?uc=">Gérer les films</a></p>
+        <p><a href="index.php?uc=movieSearch">Gérer les films</a></p>
     </section>
 </main>

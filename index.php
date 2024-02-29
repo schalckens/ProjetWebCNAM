@@ -1,8 +1,15 @@
 <?php
 session_start();
 require_once 'Includes/pdo.php';
+
+require_once 'Includes/TMDB.php';
+require_once('vendor/autoload.php');
+
 require 'Controler/UserC.php';
 require 'Model/UserModel.php';
+
+require 'Controler/MovieControler.php';
+require 'Model/MovieModel.php';
 
 $uc = filter_input(INPUT_GET, 'uc', FILTER_DEFAULT);
 
@@ -38,6 +45,18 @@ switch ($uc) {
         } else {
             $userController = new Controler\UserC();
             $userController->manageUsers();
+        }
+        break;
+    case 'movieSearch':
+        $action = filter_input(INPUT_GET, 'action', FILTER_DEFAULT);
+        $id = filter_input(INPUT_GET, 'id', FILTER_DEFAULT);
+
+        if ($action === 'add') {
+            $movieController = new Controler\MovieControler();
+            $movieController->addMovie($id);
+        }else{
+            $movieController = new Controler\MovieControler();
+            $movieController->search();
         }
         break;
     case 'accueil':

@@ -1,0 +1,21 @@
+<form method="POST" action="../index.php?uc=movieSearch">
+    <input type="text" name="movieName" placeholder="Nom de film" required>
+    <button type="submit">Rechercher</button>
+</form>
+
+<?php
+
+if (isset($movies))
+{
+    echo '<ul>';
+    foreach ($movies as $movie) {
+        echo '<li>';
+        echo $movie->title . ' ' . $movie->release_date . ' ' . $movie->original_language . '<br>'; 
+        echo '<img src="https://image.tmdb.org/t/p/w500/' . $movie->poster_path . '" width="100">' . '<br>';
+        echo '<a href="index.php?uc=movieSearch&action=add&id=' . $movie->id . '">Add movie</a>';
+        echo '</li>';
+    }
+    echo '</ul>';
+}
+
+?>
