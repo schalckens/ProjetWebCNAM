@@ -80,9 +80,9 @@ $router->addRoute('GET', '/backoffice', function() {
     include 'View/backOffice.php';
 });
 
-// Affiche la page de gestion des films
-$router->addRoute('GET', '/manageMovie', function() {
-    include 'View/manageMovie.php';
+$router->addRoute('GET', '/manageMovie', function() use ($movieController) {
+    $movieController->manageMovies();
+    //include 'View/manageMovie.php';
 });
 
 // Ajoute un film
@@ -96,6 +96,14 @@ $router->addRoute('POST', '/manageMovie/add/:id', function($id) use ($movieContr
 // Cherche des films
 $router->addRoute('POST', '/manageMovie', function() use ($movieController) {
     $movieController->search();
+    //include 'View/manageMovie.php';
+});
+$router->addRoute('GET', '/manageMovie/clearSearch', function() use ($movieController) {
+    $movieController->clearSearch();
+});
+
+$router->addRoute('GET', '/manageMovie/delete/:id', function($id) use ($movieController) {
+    $movieController->deleteMovie($id);
 });
 
 try {

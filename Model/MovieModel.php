@@ -29,7 +29,7 @@ class MovieModel
 
     public function update($id, $title, $releaseDate, $overview, $posterPath, $originalLanguage) 
     {
-        $sql = "UPDATE movie SET title = ?, releaseDate = ?, overview = ?, posterPath = ?, originalLanguage = ? WHERE id = ?";
+        $sql = "UPDATE movie SET title = ?, release_date = ?, overview = ?, poster_path = ?, original_language = ? WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage, $id]);
     }
@@ -39,6 +39,14 @@ class MovieModel
         $sql = "DELETE FROM movie WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
+    }
+
+    public function getAllMovies()
+    {
+        $sql = "SELECT * FROM movie";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }
