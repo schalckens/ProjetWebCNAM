@@ -18,13 +18,13 @@ class MovieControler
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $movieName = $_POST['movieName'] ?? null;
             if ($movieName) {
-                $movies = TMDB::searchMovies($movieName);
-                include 'View/movieSearch.php';
+                $moviesSearch = TMDB::searchMovies($movieName);
+                include 'View/manageMovie.php';
             } else {
                 echo "Veuillez saisir un nom de film.";
             }
         } else {
-            include 'View/movieSearch.php';
+            include 'View/manageMovie.php';
         }
     }
 
@@ -38,7 +38,7 @@ class MovieControler
         $success = $movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $movie['poster_path'], $movie['original_language']);
 
         echo $success ? 'Film ajouté' : 'Erreur lors de l\'ajout du film';
-        include 'View/movieSearch.php';
+        include 'View/manageMovie.php';
     }
 }
 ?>

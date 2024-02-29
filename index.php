@@ -47,7 +47,7 @@ switch ($uc) {
             $userController->manageUsers();
         }
         break;
-    case 'movieSearch':
+    case 'manageMovie':
         $action = filter_input(INPUT_GET, 'action', FILTER_DEFAULT);
         $id = filter_input(INPUT_GET, 'id', FILTER_DEFAULT);
 
