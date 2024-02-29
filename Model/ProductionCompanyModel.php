@@ -11,7 +11,7 @@ class ProductionCompanyModel
     public function __construct() {
         $this->db = PdoProjetWeb::getPdoProjetWeb();
     }
-    
+
     public function create($name, $logoPath, $originCountry) {
         $sql = "INSERT INTO production_company (name, logo_path, origin_country) VALUES (?,?,?)";
         $stmt = $this->db->prepare($sql);
