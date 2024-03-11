@@ -76,12 +76,12 @@ class UserModel
     }
 
     public function getUserByEmail($email)
-{
-    $sql = "SELECT * FROM user WHERE mail = ? LIMIT 1";
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([$email]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+    {
+        $sql = "SELECT * FROM user WHERE mail = ? LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 
     public function markEmailAsVerified($id)
@@ -90,6 +90,39 @@ class UserModel
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
     }
+
+    public function savePasswordResetToken($email, $token)
+    {
+        $sql = "INSERT INTO password_resets (email, token, created_at) VALUES (:email, :token, NOW())";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['email' => $email, 'token' => $token]);
+    }
+
+    public function getPasswordResetByToken($token)
+    {
+        $sql = "SELECT * FROM password_resets WHERE token = :token LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['token' => $token]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateUserPassword($email, $newPassword)
+    {
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        $sql = "UPDATE user SET password = :password WHERE mail = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['password' => $hashedPassword, 'email' => $email]);
+    }
+
+    public function invalidateResetToken($token)
+    {
+        $sql = "DELETE FROM password_resets WHERE token = :token";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['token' => $token]);
+    }
+
+
+
 
 
 }

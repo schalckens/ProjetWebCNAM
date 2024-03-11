@@ -2,6 +2,7 @@
 
 namespace Controler;
 
+use DateTime;
 use Model\UserModel;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -94,6 +95,72 @@ class UserC
         }
     }
 
+    public function sendPasswordResetEmail($email)
+    {
+
+        $user = $this->userModel->getUserByEmail($email);
+        if ($user) {
+            $token = bin2hex(random_bytes(32));
+            $this->userModel->savePasswordResetToken($email, $token);
+
+            // Envoie l'email avec le token
+            $this->sendResetEmail($email, $token);
+        } else {
+            echo "Le message n'a pas pu être envoyé";
+        }
+    }
+
+    protected function sendResetEmail($email, $token)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            // Paramètres du serveur d'envoi
+            $mail->isSMTP();
+            $mail->Host = 'localhost'; // à remplacer
+            $mail->SMTPAuth = false;
+            // $mail->Username = ''; // À remplacer par nom d'utilisateur SMTP
+            // $mail->Password = ''; // À remplacer par mot de passe SMTP
+            $mail->SMTPSecure = false;
+            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 25;
+
+            // Destinataires
+            $mail->setFrom('a@changer.com', 'Mailer');
+            $mail->addAddress($email);
+
+            // Contenu de l'email
+            $mail->isHTML(true);
+            $mail->Subject = 'Vérifiez votre adresse email';
+            $resetLink = "http://projetwebcnam/resetPassword/" . $token;
+            $mail->Body = 'Veuillez cliquer sur ce lien pour définir votre nouveau mot de passe: <a href="' . $resetLink . '">' . $resetLink . '</a>';
+
+            $mail->send();
+            echo 'Le message de vérification a été envoyé';
+        } catch (Exception $e) {
+            echo "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+    public function resetPassword($token, $newPassword)
+    {
+        $resetRecord = $this->userModel->getPasswordResetByToken($token);
+
+        if ($resetRecord) {
+            $currentTime = new DateTime();
+            $expireTime = new DateTime($resetRecord['created_at']);
+            $expireTime->modify('+1 hour');
+
+            if($currentTime <= $expireTime){
+                $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
+                $this->userModel->invalidateResetToken($token);
+                echo'Mot de passe mis à jour';
+            } else{
+                echo'Le token a expiré';
+            }
+        } else {
+            echo "Token invalide";
+        }
+    }
+
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -110,7 +177,7 @@ class UserC
                     }
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
-                    $_SESSION['is_admin'] = $user['isAdmin']; 
+                    $_SESSION['is_admin'] = $user['isAdmin'];
 
                     // Vérifier si l'utilisateur est un administrateur
                     if ($user['isAdmin']) {
