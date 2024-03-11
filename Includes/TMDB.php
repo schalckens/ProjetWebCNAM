@@ -4,11 +4,6 @@ class TMDB {
     private $apiKey;
     private static $clientInstance;
 
-    public static function test()
-    {
-        echo 'test';
-    }
-
     public static function getInstance() {
       if (self::$clientInstance == null) {
           self::$clientInstance = new GuzzleHttp\Client(['verify' =>false]);

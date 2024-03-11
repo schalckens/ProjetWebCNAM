@@ -19,7 +19,6 @@ class MovieControler
             $movieName = $_POST['movieName'] ?? null;
             if ($movieName) {
                 $_SESSION['movieSearch'] = TMDB::searchMovies($movieName);
-                //$moviesSearch = TMDB::searchMovies($movieName);
                 $this->manageMovies();
             } else {
                 echo "Veuillez saisir un nom de film.";
