@@ -75,11 +75,20 @@ class UserModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getUserByEmail($email)
+{
+    $sql = "SELECT * FROM user WHERE mail = ? LIMIT 1";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
     public function markEmailAsVerified($id)
     {
         $sql = "UPDATE user SET is_verified = 1, verification_token = NULL WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['userId' => $id]);
+        $stmt->execute(['id' => $id]);
     }
 
 

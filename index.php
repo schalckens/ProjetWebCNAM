@@ -49,9 +49,10 @@ $router->addRoute('POST', '/register', function() use ($userController) {
 });
 
 // Page de vérification mail
-$router->addRoute('GET', '/verify', function() use ($userController) {
-    $userController->verifyEmail($_GET['token']);
+$router->addRoute('GET', '/verify/:token', function($token) use ($userController) {
+    $userController->verifyEmail($token);
 });
+
 
 // Affiche la page de gestion des utilisateurs
 $router->addRoute('GET', '/manageUser', function() use ($userController) {

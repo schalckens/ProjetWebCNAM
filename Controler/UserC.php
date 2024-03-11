@@ -24,8 +24,11 @@ class UserC
 
             if ($username && $mail && $password) {
                 $isAdmin = false; // Par défaut, l'utilisateur n'est pas un administrateur.
-                $userId = $this->userModel->create($username, $mail, $isAdmin, $password);
-                if ($userId) {
+                $this->userModel->create($username, $mail, $isAdmin, $password);
+                // Récupère l'utilisateur par email pour obtenir l'ID
+                $user = $this->userModel->getUserByEmail($mail);
+                if ($user) {
+                    $userId = $user['id'];
                     // Génère un token de vérification
                     $verificationToken = bin2hex(random_bytes(16));
                     // Enregistre le token dans la base de données pour cet utilisateur
@@ -81,7 +84,7 @@ class UserC
             // Contenu de l'email
             $mail->isHTML(true);
             $mail->Subject = 'Vérifiez votre adresse email';
-            $verificationLink = 'http://projetwebcnam/verify?token=' . $verificationToken;
+            $verificationLink = 'http://projetwebcnam/verify/' . $verificationToken;
             $mail->Body = 'Veuillez cliquer sur ce lien pour vérifier votre adresse email: <a href="' . $verificationLink . '">' . $verificationLink . '</a>';
 
             $mail->send();
@@ -98,12 +101,16 @@ class UserC
             $password = $_POST['password'] ?? null;
 
             if ($username && $password) {
-                // Cette méthode n'existe pas encore dans UserModel. Elle doit être implémentée.
                 $user = $this->userModel->findByUsername($username);
                 if ($user && password_verify($password, $user['password'])) {
+                    // Ajoute une vérification pour voir si l'utilisateur est vérifié
+                    if ($user['is_verified'] == 0) {
+                        echo "Votre compte n'a pas été vérifié. Veuillez vérifier votre email.";
+                        return; // Arrête l'exécution de la fonction ici
+                    }
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
-                    $_SESSION['is_admin'] = $user['isAdmin']; // Supposons que 'isAdmin' est le champ qui indique si l'utilisateur est admin
+                    $_SESSION['is_admin'] = $user['isAdmin']; 
 
                     // Vérifier si l'utilisateur est un administrateur
                     if ($user['isAdmin']) {
