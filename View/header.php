@@ -23,8 +23,13 @@
                 </button>
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a href="/login">Connexion</a></li>
-                        <li class="nav-item"><a aria-disabled="true">Déconnexion</a></li>
+                    <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true): ?>
+                        <li class="nav-item"><a class="nav-link" href="/login">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">Inscription</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link" href="/game">Jeu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/disconnect">Déconnexion</a></li>
+                    <?php endif; ?>
                     </ul>
                     <!-- <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="/login">Connexion</a>
