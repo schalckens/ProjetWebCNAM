@@ -1,5 +1,5 @@
 <?php
-    include 'View/header.php';
+include 'View/header.php';
 ?>
 
 <main>
@@ -53,8 +53,10 @@
                         </td>
                         <td>
                             <a href="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>">Modifier</a>
-                            <a href="/manageUser/delete/<?php echo htmlspecialchars($user['id']); ?>"
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                            <?php if (!isset ($user['isAdmin']) || $user['isAdmin'] == 0): ?>
+                                <a href="/manageUser/delete/<?php echo htmlspecialchars($user['id']); ?>"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -65,5 +67,5 @@
 </main>
 
 <?php
-    include 'View/footer.php';
+include 'View/footer.php';
 ?>
