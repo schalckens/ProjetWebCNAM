@@ -67,7 +67,7 @@ class UserC
         if ($user) {
             $this->userModel->markEmailAsVerified($user['id']);
             echo "Votre email a été vérifié avec succès. Vous allez être redirigé dans quelques secondes...";
-        echo "<script>setTimeout(function() { window.location.href = '/login'; }, 5000);</script>";
+            echo "<script>setTimeout(function() { window.location.href = '/login'; }, 5000);</script>";
         } else {
             echo "Le lien de vérification est invalide ou expiré.";
         }
@@ -171,6 +171,7 @@ class UserC
                     $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
                     $this->userModel->invalidateResetToken($token);
                     echo "Votre mot de passe a été réinitialisé avec succès.";
+                    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 2000);</script>";
                 } else {
                     echo 'Le token a expiré';
                 }
@@ -220,26 +221,31 @@ class UserC
     }
 
     public function logout()
-{
-    // Efface toutes les données de session
-    $_SESSION = array();
+    {
+        // Efface toutes les données de session
+        $_SESSION = array();
 
-    // Si vous voulez détruire complètement la session, effacez également le cookie de session.
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
-        );
+        // Efface le cookie de session.
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        // Finalement, détruit la session.
+        session_destroy();
+
+        // Redirige l'utilisateur vers la page d'accueil
+        header('Location: /accueil');
+        exit;
     }
-
-    // Finalement, détruisez la session.
-    session_destroy();
-
-    // Redirigez l'utilisateur vers la page de connexion ou la page d'accueil
-    header('Location: /accueil');
-    exit;
-}
 
 
     public function addUser()
