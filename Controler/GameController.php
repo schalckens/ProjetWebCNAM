@@ -21,12 +21,13 @@ class GameController{
 
     public function compareMovie($movieName)
     {
-        echo "Movie name: " . $movieName . ", randomMovie: " . $_SESSION['randomMovie'] . " ";
-        $randomMovie = $_SESSION['randomMovie'];
+        //echo "Movie name: " . $movieName . ", randomMovie: " . $_SESSION['randomMovie'] . " ";
+        $randomMovie = $_SESSION['randomMovie']['title'];
         if ($movieName === $randomMovie) {
-            echo "Bravo !";
+            $_SESSION['randomMovie'] = $this->getRandomMovie();
+            echo $_SESSION['randomMovie']['title'];
         } else {
-            echo "Dommage !";
+            echo "false";
         }
     }
 

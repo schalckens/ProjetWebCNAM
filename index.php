@@ -128,7 +128,7 @@ $router->addRoute('GET', '/manageMovie', function () use ($movieController) {
 
 $router->addRoute('GET', '/game', function () use ($gameController) {
     checkUserLoggedIn();
-    $_SESSION['randomMovie'] = $gameController->getRandomMovie()['title'];
+    $_SESSION['randomMovie'] = $gameController->getRandomMovie();
     include 'View/game.php';
 });
 

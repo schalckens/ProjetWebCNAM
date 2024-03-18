@@ -3,7 +3,7 @@
 ?>
 
 <?php
-    echo $_SESSION["randomMovie"];
+    echo '<div id="randomMovie">' . $_SESSION["randomMovie"]["title"] . '</div>';
 ?>
 
 <body>
@@ -18,6 +18,11 @@
 <script>
     $("#inputMovie").on("input", function(){
         var movieName = $("#inputMovie").val();
+        if(movieName === "") {
+            $("#movieTitles").empty();
+            return;
+        }
+
         $.ajax({
             url: "/gameMovie/search/" + movieName,
             method: "GET",
@@ -47,7 +52,12 @@
             url: "/gameMovie/compareMovie/" + movieName,
             method: "GET",
             success: function(response) {
-                console.log(response);
+                if(response === "false") {
+                    alert("Dommage, ce n'est pas le bon film.");
+                } else {
+                    alert("Bravo, vous avez trouvé le bon film !");
+                    $("#randomMovie").text(response);
+                }
             }
         });
     });
