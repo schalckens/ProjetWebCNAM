@@ -27,7 +27,7 @@
                     <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true): ?>
                         <li class="nav-item"><a class="nav-link" href="/login">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link" href="/register">Inscription</a></li>
-                    <?php if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true): ?>
+                    <?php elseif (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] == 0): ?>
                         <li class="nav-item"><a class="nav-link" href="/game">Jeu</a></li>
                         <li class="nav-item"><a class="nav-link" href="/disconnect">Déconnexion</a></li>
                     <?php else: ?>
