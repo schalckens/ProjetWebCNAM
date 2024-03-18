@@ -1,18 +1,18 @@
-<form method="POST" action="/register" id="registerForm">
+<form method="POST" action="/register" id="form">
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
         <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"
             aria-label="Nom d'utilisateur" aria-describedby="basic-addon1">
     </div>
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">✉️</span>
+        <span class="input-group-text" id="basic-addon2">✉️</span>
         <input type="email" name="mail" class="form-control" placeholder="Email"
             aria-label="Email" aria-describedby="basic-addon1">
     </div>
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">🔒</span>
+        <span class="input-group-text" id="basic-addon3">🔒</span>
         <input type="password" name="password" class="form-control" placeholder="Mot de passe"
-            aria-label="Mot de passe" aria-describedby="basic-addon1" id="passwordInput">
+            aria-label="Mot de passe" aria-describedby="basic-addon1" id="password">
     </div>
     <div id="passwordRequirements"></div>
     <button type="submit">Créer un compte</button>
