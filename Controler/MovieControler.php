@@ -79,11 +79,8 @@ class MovieControler
                 $movies[] = $movie;
             }
         }
-        if($movies === []) {
-            echo json_encode([]);
-        } else {
-            echo json_encode($movies);
-        }
+
+        echo json_encode($movies);
     }
 
     public function getAllMovies()
