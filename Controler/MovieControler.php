@@ -38,8 +38,9 @@ class MovieControler
     public function addMovie($id)
     {
         $movie = TMDB::getMovie($id);
+        $moviePath = 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'];
 
-        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $movie['poster_path'], $movie['original_language']);
+        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $moviePath, $movie['original_language']);
 
         if (!$success) {
             throw new \Exception('Erreur lors de l\'ajout du film');
@@ -78,8 +79,16 @@ class MovieControler
                 $movies[] = $movie;
             }
         }
+        if($movies === []) {
+            echo json_encode([]);
+        } else {
+            echo json_encode($movies);
+        }
+    }
 
-        echo json_encode($movies);
+    public function getAllMovies()
+    {
+        return $this->movieModel->getAllMovies();
     }
 }
 ?>
