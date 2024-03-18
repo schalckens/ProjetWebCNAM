@@ -121,6 +121,25 @@ class UserModel
         $stmt->execute(['token' => $token]);
     }
 
+    public function usernameExists($username)
+    {
+        $sql = "SELECT COUNT(*) FROM user WHERE username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['username' => $username]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+    public function emailExists($email)
+    {
+        $sql = "SELECT COUNT(*) FROM user WHERE mail = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+
 
 
 

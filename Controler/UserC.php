@@ -24,6 +24,15 @@ class UserC
             $password = $_POST['password'] ?? null;
 
             if ($username && $mail && $password) {
+                // Vérifie si l'username ou l'email existent déjà
+                if ($this->userModel->usernameExists($username)) {
+                    echo "Ce nom d'utilisateur est déjà pris.";
+                    return;
+                }
+                if ($this->userModel->emailExists($mail)) {
+                    echo "Un compte avec cette adresse email existe déjà.";
+                    return;
+                }
                 $isAdmin = false; // Par défaut, l'utilisateur n'est pas un administrateur.
                 $this->userModel->create($username, $mail, $isAdmin, $password);
                 // Récupère l'utilisateur par email pour obtenir l'ID
@@ -38,7 +47,7 @@ class UserC
                     // Envoie l'email de vérification
                     $this->sendVerificationEmail($mail, $verificationToken);
 
-                    echo "Compte créé avec succès. Veuillez vérifier votre email pour activer votre compte.";
+                    echo "Veuillez vérifier votre email pour activer votre compte.";
                     //header('Location: /accueil'); // Redirige vers la page d'accueil avec un message
                     //exit();
                 } else {
@@ -57,7 +66,8 @@ class UserC
         $user = $this->userModel->getUserByToken($token);
         if ($user) {
             $this->userModel->markEmailAsVerified($user['id']);
-            echo "Votre email a été vérifié avec succès.";
+            echo "Votre email a été vérifié avec succès. Vous allez être redirigé dans quelques secondes...";
+        echo "<script>setTimeout(function() { window.location.href = '/login'; }, 5000);</script>";
         } else {
             echo "Le lien de vérification est invalide ou expiré.";
         }
@@ -89,7 +99,7 @@ class UserC
             $mail->Body = 'Veuillez cliquer sur ce lien pour vérifier votre adresse email: <a href="' . $verificationLink . '">' . $verificationLink . '</a>';
 
             $mail->send();
-            echo 'Le message de vérification a été envoyé';
+            echo 'Le message de vérification a été envoyé. ';
         } catch (Exception $e) {
             echo "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
         }
@@ -145,16 +155,25 @@ class UserC
         $resetRecord = $this->userModel->getPasswordResetByToken($token);
 
         if ($resetRecord) {
-            $currentTime = new DateTime();
-            $expireTime = new DateTime($resetRecord['created_at']);
-            $expireTime->modify('+1 hour');
+            $user = $this->userModel->getUserByEmail($resetRecord['email']);
+            if ($user) {
+                // Vérifie que le nouveau mot de passe n'est pas identique à l'ancien
+                if (password_verify($newPassword, $user['password'])) {
+                    echo "Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.";
+                    return; // Arrêter l'exécution si les mots de passe sont identiques
+                }
 
-            if($currentTime <= $expireTime){
-                $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
-                $this->userModel->invalidateResetToken($token);
-                echo'Mot de passe mis à jour';
-            } else{
-                echo'Le token a expiré';
+                $currentTime = new DateTime();
+                $expireTime = new DateTime($resetRecord['created_at']);
+                $expireTime->modify('+1 hour');
+
+                if ($currentTime <= $expireTime) {
+                    $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
+                    $this->userModel->invalidateResetToken($token);
+                    echo "Votre mot de passe a été réinitialisé avec succès.";
+                } else {
+                    echo 'Le token a expiré';
+                }
             }
         } else {
             echo "Token invalide";
@@ -204,7 +223,7 @@ class UserC
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? null;
             $mail = $_POST['mail'] ?? null;
-            $isAdmin = isset($_POST['isAdmin']) ? 1 : 0;
+            $isAdmin = isset ($_POST['isAdmin']) ? 1 : 0;
             $password = $_POST['password'] ?? null;
 
             // Peut-être checker le format des données ici
@@ -233,7 +252,7 @@ class UserC
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? null;
             $mail = $_POST['mail'] ?? null;
-            $isAdmin = isset($_POST['isAdmin']) ? 1 : 0;
+            $isAdmin = isset ($_POST['isAdmin']) ? 1 : 0;
             $password = $_POST['password'] ?? null;
 
             $this->userModel->update($id, $username, $mail, $isAdmin, $password);
