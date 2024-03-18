@@ -13,10 +13,13 @@
     <nav>
         <ul>
             <li><a href="/accueil">Accueil</a></li>
+            <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true): ?>
                 <li><a href="/login">Connexion</a></li>
                 <li><a href="/register">Inscription</a></li>
+            <?php else: ?>
                 <li><a href="/game">Jeu</a></li>
                 <li><a href="/disconnect">Déconnexion</a></li>
+                <?php endif; ?>
         </ul>
     </nav>
 </header>

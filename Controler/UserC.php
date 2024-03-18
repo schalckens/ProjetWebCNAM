@@ -197,6 +197,7 @@ class UserC
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
                     $_SESSION['is_admin'] = $user['isAdmin'];
+                    $_SESSION["logged_in"] = true;
 
                     // Vérifier si l'utilisateur est un administrateur
                     if ($user['isAdmin']) {
@@ -204,7 +205,7 @@ class UserC
                         header('Location: /backoffice');
                     } else {
                         // Redirige vers la page d'accueil pour les utilisateurs
-                        header('Location: /accueil');
+                        header('Location: /game');
                     }
                     exit(); // bonne pratique après un header
                 } else {
@@ -217,6 +218,29 @@ class UserC
             include 'View/login.php';
         }
     }
+
+    public function logout()
+{
+    // Efface toutes les données de session
+    $_SESSION = array();
+
+    // Si vous voulez détruire complètement la session, effacez également le cookie de session.
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    // Finalement, détruisez la session.
+    session_destroy();
+
+    // Redirigez l'utilisateur vers la page de connexion ou la page d'accueil
+    header('Location: /accueil');
+    exit;
+}
+
 
     public function addUser()
     {
