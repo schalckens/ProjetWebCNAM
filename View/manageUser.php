@@ -2,46 +2,58 @@
 include 'View/header.php';
 ?>
 
-<main>
-    <h1>Gérer les utilisateurs</h1>
+<div class="container">
+    <h2>Gérer les utilisateurs</h2>
 
     <!-- Formulaire pour ajouter un nouvel utilisateur -->
     <section>
-        <h2>Ajouter un utilisateur</h2>
+        <h3>Ajouter un utilisateur</h3>
         <form action="/manageUser/add" method="post">
-            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-            <input type="email" name="mail" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Mot de passe" required>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"
+                    aria-label="Nom d'utilisateur" aria-describedby="basic-addon1" required>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon2">✉️</span>
+                <input type="email" name="mail" class="form-control" placeholder="Email" aria-label="Email"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">🔒</span>
+                <input type="password" name="password" class="form-control" placeholder="Mot de passe"
+                    aria-label="Mot de passe" aria-describedby="basic-addon1" id="password">
+            </div>
             <div>
                 <label>Administrateur :</label>
-                <select name="isAdmin">
+                <select class="form-select" name="isAdmin">
                     <option value="0">Non</option>
                     <option value="1">Oui</option>
                 </select>
             </div>
-            <button type="submit">Ajouter</button>
+            <button type="submit" class="btn btn-outline-secondary">Ajouter</button>
         </form>
     </section>
-
+    <br>
     <!-- Affichage de la liste des utilisateurs existants -->
     <section>
-        <h2>Liste des Utilisateurs</h2>
-        <table>
+        <h3>Liste des Utilisateurs</h3>
+        <table class="table table-info">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nom d'utilisateur</th>
-                    <th>Email</th>
-                    <th>Administrateur</th>
-                    <th>Actions</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom d'utilisateur</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Administrateur</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <td>
+                        <th scope="row">
                             <?php echo htmlspecialchars($user['id']); ?>
-                        </td>
+                        </th>
                         <td>
                             <?php echo htmlspecialchars($user['username']); ?>
                         </td>
@@ -64,7 +76,7 @@ include 'View/header.php';
 
         </table>
     </section>
-</main>
+</div>
 
 <?php
 include 'View/footer.php';

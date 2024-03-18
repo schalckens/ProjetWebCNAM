@@ -2,28 +2,31 @@
     include 'View/header.php';
 ?>
 
-<main>
-    <h1>Modifier l'Utilisateur</h1>
+<div class="container">
+    <h2>Modifier l'Utilisateur</h2>
     <form action="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>" method="post">
-        <div>
-            <label for="username">Nom d'utilisateur:</label>
-            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"
+                aria-label="Nom d'utilisateur" aria-describedby="basic-addon1" value="<?php echo htmlspecialchars($user['username']); ?>" required>
         </div>
-        <div>
-            <label for="mail">Email:</label>
-            <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($user['mail']); ?>" required>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">✉️</span>
+            <input type="email" name="mail" class="form-control" placeholder="Email" aria-label="Email"
+                aria-describedby="basic-addon1" value="<?php echo htmlspecialchars($user['mail']); ?>" required>
         </div>
-        <div>
-            <label for="isAdmin">Administrateur:</label>
-            <input type="checkbox" id="isAdmin" name="isAdmin" <?php echo $user['isAdmin'] ? 'checked' : ''; ?>>
+        <div  class="form-check">
+            <label class="form-check-label" for="isAdmin">Administrateur:</label>
+            <input class="form-check-input"  type="checkbox" id="isAdmin" name="isAdmin" <?php echo $user['isAdmin'] ? 'checked' : ''; ?>>
         </div>
-        <div>
-            <label for="password">Nouveau mot de passe (laisser vide pour ne pas changer):</label>
-            <input type="password" id="password" name="password">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">🔒</span>
+            <input type="password" name="password" class="form-control" placeholder="Mot de passe"
+                aria-label="Mot de passe" aria-describedby="basic-addon1" id="password">
         </div>
-        <button type="submit">Mettre à jour</button>
+        <button type="submit" class="btn btn-outline-secondary">Mettre à jour</button>
     </form>
-</main>
+</div>
 
 <?php
     include 'View/footer.php';

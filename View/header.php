@@ -28,9 +28,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-                
+                <a class="navbar-brand" href="/accueil">  <span class="fa fa-home"></span> Nom App</a>
                 <div class="collapse navbar-collapse" id="navbar1">
-                    <a class="navbar-brand" href="/accueil">  <span class="fa fa-home"></span> Nom App</a>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true): ?>
                         <li class="nav-item"><a class="nav-link" href="/login">Connexion</a></li>
