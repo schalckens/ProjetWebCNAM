@@ -56,7 +56,8 @@
                     alert("Dommage, ce n'est pas le bon film.");
                 } else {
                     alert("Bravo, vous avez trouvé le bon film !");
-                    $("#randomMovie").text(response);
+                    
+                    $("#randomMovie").text(JSON.parse(response).title);
                 }
             }
         });
