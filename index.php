@@ -3,6 +3,7 @@ session_start();
 require_once 'Includes/pdo.php';
 
 require_once 'Includes/TMDB.php';
+require_once 'Includes/functions.php';
 require_once('vendor/autoload.php');
 
 require 'Controler/UserC.php';
@@ -39,6 +40,11 @@ $router->addRoute('GET', '/login', function () {
 $router->addRoute('POST', '/login', function () use ($userController) {
     $userController->login();
 });
+
+$router->addRoute('GET', '/disconnect', function () use ($userController) {
+    $userController->logout();
+});
+
 
 
 $router->addRoute('GET', '/forgotPassword', function () {
@@ -83,43 +89,52 @@ $router->addRoute('GET', '/verify/:token', function ($token) use ($userControlle
 
 // Affiche la page de gestion des utilisateurs
 $router->addRoute('GET', '/manageUser', function () use ($userController) {
+    checkUserIsAdmin();
     $userController->manageUsers();
 });
 
 // Ajoute un utilisateur
 $router->addRoute('POST', '/manageUser/add', function () use ($userController) {
+    checkUserIsAdmin();
     $userController->addUser();
 });
 
 // Modifie un utilisateur
 $router->addRoute('GET', '/manageUser/edit/:id', function ($id) use ($userController) {
+    checkUserIsAdmin();
     $userController->editUser($id);
 });
 $router->addRoute('POST', '/manageUser/edit/:id', function ($id) use ($userController) {
+    checkUserIsAdmin();
     $userController->editUser($id);
 });
 
 
 // Supprime un utilisateur
 $router->addRoute('GET', '/manageUser/delete/:id', function ($id) use ($userController) {
+    checkUserIsAdmin();
     $userController->deleteUser($id);
 });
 $router->addRoute('GET', '/backoffice', function () {
+    checkUserIsAdmin();
     include 'View/backOffice.php';
 });
 
 $router->addRoute('GET', '/manageMovie', function () use ($movieController) {
+    checkUserIsAdmin();
     $movieController->manageMovies();
     //include 'View/manageMovie.php';
 });
 
 $router->addRoute('GET', '/game', function () use ($gameController) {
+    checkUserLoggedIn();
     $_SESSION['randomMovie'] = $gameController->getRandomMovie()['title'];
     include 'View/game.php';
 });
 
 // Recherche de films par nom
 $router->addRoute('GET', '/gameMovie/search/:userInput', function ($userInput) use ($movieController) {
+    checkUserLoggedIn();
     $inputDecoded = urldecode($userInput);
     $movieController->getMoviesByInput($inputDecoded);
 });
@@ -131,22 +146,27 @@ $router->addRoute('GET', '/gameMovie/compareMovie/:movieName', function ($movieN
 
 // Ajoute un film
 $router->addRoute('GET', '/manageMovie/add/:id', function ($id) use ($movieController) {
+    checkUserIsAdmin();
     $movieController->addMovie($id);
 });
 $router->addRoute('POST', '/manageMovie/add/:id', function ($id) use ($movieController) {
+    checkUserIsAdmin();
     $movieController->addMovie($id);
 });
 
 // Cherche des films
 $router->addRoute('POST', '/manageMovie', function () use ($movieController) {
+    checkUserIsAdmin();
     $movieController->search();
     //include 'View/manageMovie.php';
 });
 $router->addRoute('GET', '/manageMovie/clearSearch', function () use ($movieController) {
+    checkUserIsAdmin();
     $movieController->clearSearch();
 });
 
 $router->addRoute('GET', '/manageMovie/delete/:id', function ($id) use ($movieController) {
+    checkUserIsAdmin();
     $movieController->deleteMovie($id);
 });
 
