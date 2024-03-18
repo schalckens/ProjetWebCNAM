@@ -145,16 +145,25 @@ class UserC
         $resetRecord = $this->userModel->getPasswordResetByToken($token);
 
         if ($resetRecord) {
-            $currentTime = new DateTime();
-            $expireTime = new DateTime($resetRecord['created_at']);
-            $expireTime->modify('+1 hour');
-
-            if($currentTime <= $expireTime){
-                $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
-                $this->userModel->invalidateResetToken($token);
-                echo'Mot de passe mis à jour';
-            } else{
-                echo'Le token a expiré';
+            $user = $this->userModel->getUserByEmail($resetRecord['email']);
+            if ($user) {
+                // Vérifie que le nouveau mot de passe n'est pas identique à l'ancien
+                if (password_verify($newPassword, $user['password'])) {
+                    echo "Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.";
+                    return; // Arrêter l'exécution si les mots de passe sont identiques
+                }
+    
+                $currentTime = new DateTime();
+                $expireTime = new DateTime($resetRecord['created_at']);
+                $expireTime->modify('+1 hour');
+    
+                if($currentTime <= $expireTime){
+                    $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
+                    $this->userModel->invalidateResetToken($token);
+                    echo "Votre mot de passe a été réinitialisé avec succès.";
+                } else{
+                    echo 'Le token a expiré';
+                }
             }
         } else {
             echo "Token invalide";
