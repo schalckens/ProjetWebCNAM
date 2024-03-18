@@ -22,12 +22,14 @@ include 'View/header.php';
         <div id="passwordRequirements"></div>
         <button type="submit" class="btn btn-outline-secondary">Créer un compte</button>
     </form>
+<div>
+<div class="container">
 
     <script>
         function validatePassword() {
             var value = $('#password').val();
             var isPasswordValid = true;
-            var errorMessage = '<h4>Le mot de passe doit suivre les règles suivantes : </h4>';
+            var errorMessage = '<br><h4>Le mot de passe doit suivre les règles suivantes : </h4>';
 
             if (value.length < 8) {
                 errorMessage += '<ul><li>contenir au moins 8 caractères</li>';
@@ -38,15 +40,15 @@ include 'View/header.php';
                 isPasswordValid = false;
             }
             if (!value.match(/[0-9]/)) {
-                errorMessage += '<br>- contenir au moins un chiffre';
+                errorMessage += '<li> contenir au moins un chiffre </li>';
                 isPasswordValid = false;
             }
             if (!value.match(/[a-z]/)) {
-                errorMessage += '<br>- contenir au moins une minuscule';
+                errorMessage += '<li> contenir au moins une minuscule </li>';
                 isPasswordValid = false;
             }
             if (!value.match(/[^a-zA-Z0-9]/)) {
-                errorMessage += '<br>- contenir au moins un caractère spécial';
+                errorMessage += '<li> contenir au moins un caractère spécial </li></ul>';
                 isPasswordValid = false;
             }
             if (!isPasswordValid) {
@@ -69,7 +71,7 @@ include 'View/header.php';
             }
         });
     </script>
-<div>
+</div>
 
 <?php
     include 'View/footer.php';

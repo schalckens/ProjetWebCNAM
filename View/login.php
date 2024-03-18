@@ -1,6 +1,7 @@
 <?php
 include 'View/header.php';
 ?>
+
 <div class="container">
     <h2> Connectez-vous !</h2>
     <form method="POST" action="/login">
