@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <main>
     <h1>Back Office</h1>
     <section>
@@ -9,3 +13,7 @@
         <p><a href="/manageMovie">Gérer les films</a></p>
     </section>
 </main>
+
+<?php
+    include 'View/footer.php';
+?>

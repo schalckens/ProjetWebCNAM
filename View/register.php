@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <form method="POST" action="/register" id="form">
     <input type="text" name="username" placeholder="Nom d'utilisateur" required>
     <input type="email" name="mail" placeholder="Email" required>
@@ -51,3 +55,7 @@
         }
     });
 </script>
+
+<?php
+    include 'View/footer.php';
+?>

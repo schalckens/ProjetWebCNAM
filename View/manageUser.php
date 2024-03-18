@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <main>
     <h1>Gérer les utilisateurs</h1>
 
@@ -59,3 +63,7 @@
         </table>
     </section>
 </main>
+
+<?php
+    include 'View/footer.php';
+?>
