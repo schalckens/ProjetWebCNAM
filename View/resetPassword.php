@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <form action="/resetPassword" method="POST" id="form">
     <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
     <label for="new_password">Nouveau mot de passe :</label>
@@ -60,3 +64,7 @@
         }
     });
 </script>
+
+<?php
+    include 'View/footer.php';
+?>

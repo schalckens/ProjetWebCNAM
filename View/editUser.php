@@ -1,3 +1,6 @@
+<?php
+    include 'View/header.php';
+?>
 
 <main>
     <h1>Modifier l'Utilisateur</h1>
@@ -21,3 +24,7 @@
         <button type="submit">Mettre à jour</button>
     </form>
 </main>
+
+<?php
+    include 'View/footer.php';
+?>
