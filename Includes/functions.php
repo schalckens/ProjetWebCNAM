@@ -11,7 +11,7 @@ function checkUserLoggedIn()
 function checkUserIsAdmin()
 {
     // Vérifie si la clé 'is_admin' existe dans la session et si elle est fausse ou non définie
-    if (!isset ($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+    if (!isset ($_SESSION['is_admin']) || $_SESSION['is_admin'] == 0) {
         header('location: /accueil');
         exit;
     }
