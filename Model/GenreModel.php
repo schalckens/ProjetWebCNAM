@@ -37,4 +37,21 @@ class GenreModel
         return $stmt->execute([$id]);
     }
 
+    public function findByName($name) {
+        $sql = "SELECT * FROM genre WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$name]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createIfNotExists($name) {
+        $genre = $this->findByName($name);
+        if ($genre) {
+            return $genre['id'];
+        } else {
+            $this->create($name);
+            return $this->db->lastInsertId();
+        }
+    }
+
 }

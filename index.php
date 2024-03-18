@@ -12,6 +12,7 @@ require 'router.php';
 require 'Controler/MovieControler.php';
 require 'Controler/GameController.php';
 require 'Model/MovieModel.php';
+require 'Model/GenreModel.php';
 
 
 // Création d'une instance du routeur
