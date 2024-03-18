@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <form method="POST" action="/login">
     <a href="/register">S'inscrire</a>
     <div class="input-group mb-3">
@@ -13,3 +17,7 @@
     <button type="submit">Se connecter</button>
     <a href="/forgotPassword">Mot de passe oublié ?</a>
 </form>
+
+<?php
+    include 'View/footer.php';
+?>

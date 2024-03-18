@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <main>
     <h1>Back Office</h1>
     <section>
@@ -69,3 +73,7 @@ if (isset($_SESSION['movieSearch']) && !empty($_SESSION['movieSearch']))
     </section>
 
 </main>
+
+<?php
+    include 'View/footer.php';
+?>

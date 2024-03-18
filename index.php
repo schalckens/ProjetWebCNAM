@@ -1,5 +1,3 @@
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
 <?php
 session_start();
 require_once 'Includes/pdo.php';
@@ -12,9 +10,6 @@ require 'Model/UserModel.php';
 require 'router.php';
 require 'Controler/MovieControler.php';
 require 'Model/MovieModel.php';
-
-// Entête de la page
-require 'View/header.php';
 
 
 // Création d'une instance du routeur
@@ -116,6 +111,16 @@ $router->addRoute('GET', '/manageMovie', function () use ($movieController) {
     //include 'View/manageMovie.php';
 });
 
+$router->addRoute('GET', '/game', function () use ($movieController) {
+    include 'View/game.php';
+});
+
+// Recherche de films par nom
+$router->addRoute('GET', '/gameMovie/search/:userInput', function ($userInput) use ($movieController) {
+    $movieController->getMoviesByInput($userInput);
+});
+
+
 // Ajoute un film
 $router->addRoute('GET', '/manageMovie/add/:id', function ($id) use ($movieController) {
     $movieController->addMovie($id);
@@ -143,6 +148,4 @@ try {
     // Gestion des erreurs si aucune route ne correspond
     echo "Erreur : " . $e->getMessage();
 }
-// Pied de la page
-require 'View/footer.php';
 ?>

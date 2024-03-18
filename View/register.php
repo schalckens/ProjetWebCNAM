@@ -1,3 +1,7 @@
+<?php
+    include 'View/header.php';
+?>
+
 <form method="POST" action="/register" id="form">
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
@@ -64,3 +68,7 @@
         }
     });
 </script>
+
+<?php
+    include 'View/footer.php';
+?>
