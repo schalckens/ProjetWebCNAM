@@ -9,6 +9,7 @@ require 'Controler/UserC.php';
 require 'Model/UserModel.php';
 require 'router.php';
 require 'Controler/MovieControler.php';
+require 'Controler/GameController.php';
 require 'Model/MovieModel.php';
 
 
@@ -19,6 +20,7 @@ $router = new Router();
 // Obtention de l'instance du contrôleur
 $userController = new Controler\UserC();
 $movieController = new Controler\MovieControler();
+$gameController = new Controler\GameController();
 
 // Définition des routes
 
@@ -111,15 +113,21 @@ $router->addRoute('GET', '/manageMovie', function () use ($movieController) {
     //include 'View/manageMovie.php';
 });
 
-$router->addRoute('GET', '/game', function () use ($movieController) {
+$router->addRoute('GET', '/game', function () use ($gameController) {
+    $_SESSION['randomMovie'] = $gameController->getRandomMovie()['title'];
     include 'View/game.php';
 });
 
 // Recherche de films par nom
 $router->addRoute('GET', '/gameMovie/search/:userInput', function ($userInput) use ($movieController) {
-    $movieController->getMoviesByInput($userInput);
+    $inputDecoded = urldecode($userInput);
+    $movieController->getMoviesByInput($inputDecoded);
 });
 
+$router->addRoute('GET', '/gameMovie/compareMovie/:movieName', function ($movieName) use ($gameController) {
+    $movieNameDecoded = urldecode($movieName);
+    $gameController->compareMovie($movieNameDecoded);
+});
 
 // Ajoute un film
 $router->addRoute('GET', '/manageMovie/add/:id', function ($id) use ($movieController) {
