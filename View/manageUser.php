@@ -8,7 +8,7 @@ include 'View/header.php';
     <!-- Formulaire pour ajouter un nouvel utilisateur -->
     <section>
         <h3>Ajouter un utilisateur</h3>
-        <form action="/manageUser/add" method="post">
+        <form action="/manageUser/add" method="post" id="form">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">@</span>
                 <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"
@@ -77,7 +77,56 @@ include 'View/header.php';
         </table>
     </section>
 </div>
+<div class="container">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function validatePassword() {
+            var value = $('#password').val();
+            var isPasswordValid = true;
+            var errorMessage = '<br><h4>Le mot de passe doit suivre les règles suivantes : </h4>';
 
+            if (value.length < 8) {
+                errorMessage += '<ul><li>contenir au moins 8 caractères</li>';
+                isPasswordValid = false;
+            }
+            if (!value.match(/[A-Z]/)) {
+                errorMessage += '<li> contenir au moins une majuscule </li>';
+                isPasswordValid = false;
+            }
+            if (!value.match(/[0-9]/)) {
+                errorMessage += '<li> contenir au moins un chiffre </li>';
+                isPasswordValid = false;
+            }
+            if (!value.match(/[a-z]/)) {
+                errorMessage += '<li> contenir au moins une minuscule </li>';
+                isPasswordValid = false;
+            }
+            if (!value.match(/[^a-zA-Z0-9]/)) {
+                errorMessage += '<li> contenir au moins un caractère spécial </li></ul>';
+                isPasswordValid = false;
+            }
+            if (!isPasswordValid) {
+                if ($('.error').length) {
+                    $('.error').html(errorMessage);
+                } else {
+                    $('#form').append('<div class="error">' + errorMessage + '</div>');
+                }
+                return false;
+            } else {
+                $('.error').remove();
+                return true;
+            }
+        }
+
+        $('#password').on('input', validatePassword);
+        $('#form').on('submit', function (e) {
+            if (!validatePassword()) {
+                
+                e.preventDefault();
+            }
+        });
+    </script>
+</div>
 <?php
 include 'View/footer.php';
 ?>

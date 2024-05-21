@@ -253,7 +253,12 @@ class UserC
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? null;
             $mail = $_POST['mail'] ?? null;
-            $isAdmin = isset ($_POST['isAdmin']) ? 1 : 0;
+            if (($_POST['isAdmin']) == 1){
+                $isAdmin = 1;
+            } else{
+                $isAdmin = 0;
+            }
+            
             $password = $_POST['password'] ?? null;
 
             // Peut-être checker le format des données ici
