@@ -38,6 +38,21 @@ class TMDB {
       return $directors;
     }
 
+    public static function getActors($movieID, $limit = 10){
+      $credits = self::getCredits($movieID);
+      $actors = [];
+      foreach ($credits->cast as $index => $member) {
+        if ($index >= $limit) {
+          break;
+        }
+        $actors[] = [
+          'name' => $member->name,
+          'profile_path' => $member->profile_path,
+        ];
+      }
+      return $actors;
+    }
+
     public static function getGenres($movieID){
       $details = self::getDetails($movieID);
       $genres = [];
@@ -53,6 +68,7 @@ class TMDB {
       $genres = self::getGenres($movieID);
       $countries = [];
       $productionCompanies = [];
+      $actors = self::getActors($movieID);
 
       if (isset($details->production_countries)) {
         foreach ($details->production_countries as $country) {
@@ -80,6 +96,7 @@ class TMDB {
         'genres' => $genres,
         'countries' => $countries,
         'production_companies' => $productionCompanies,
+        'actors' => $actors,
       ];
     }
 
