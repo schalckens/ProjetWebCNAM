@@ -51,6 +51,25 @@ class TMDB {
       $details = self::getDetails($movieID);
       $directors = self::getDirectors($movieID);
       $genres = self::getGenres($movieID);
+      $countries = [];
+      $productionCompanies = [];
+
+      if (isset($details->production_countries)) {
+        foreach ($details->production_countries as $country) {
+          $countries[] = $country->name;
+        }
+      }
+
+      if (isset($details->production_companies)) {
+        foreach ($details->production_companies as $company) {
+          $productionCompanies[] = [
+            'name' => $company->name,
+            'logo_path' => $company->logo_path,
+            'origin_country' => $company->origin_country,
+          ];
+        }
+      }
+
       return [
         'title' => $details->title,
         'release_date' => $details->release_date,
@@ -59,6 +78,8 @@ class TMDB {
         'poster_path' => $details->poster_path,
         'directors' => $directors,
         'genres' => $genres,
+        'countries' => $countries,
+        'production_companies' => $productionCompanies,
       ];
     }
 

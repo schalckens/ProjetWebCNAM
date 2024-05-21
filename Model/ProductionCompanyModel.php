@@ -37,4 +37,21 @@ class ProductionCompanyModel
         return $stmt->execute([$id]);
     }
 
+    public function findByName($name) {
+        $sql = "SELECT * FROM production_company WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$name]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createIfNotExists($name, $logoPath, $originCountry) {
+        $productionCompany = $this->findByName($name);
+        if ($productionCompany) {
+            return $productionCompany['id'];
+        } else {
+            $this->create($name, $logoPath, $originCountry);
+            return $this->db->lastInsertId();
+        }
+    }
+
 }

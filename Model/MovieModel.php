@@ -9,13 +9,19 @@ class MovieModel
     private $db;
 
     private $genreModel;
+    private $directorModel;
+    private $countryModel;
+    private $productionCompanyModel;
 
     public function __construct() {
         $this->db = PdoProjetWeb::getPdoProjetWeb();
         $this->genreModel = new GenreModel();
+        $this->directorModel = new DirectorModel();
+        $this->countryModel = new CountryModel();
+        $this->productionCompanyModel = new ProductionCompanyModel();
     }
 
-    public function create($title, $releaseDate, $overview, $posterPath, $originalLanguage, $genres)
+    public function create($title, $releaseDate, $overview, $posterPath, $originalLanguage, $genres, $directors, $countries, $productionCompanies)
     {
         $sql = "INSERT INTO movie (title, release_date, overview, poster_path, original_language) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
@@ -27,6 +33,27 @@ class MovieModel
             $sql = "INSERT INTO movie_genre (movie_id, genre_id) VALUES (?, ?)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$movieID, $genreID]);
+        }
+
+        foreach ($directors as $director) {
+            $directorID = $this->directorModel->createIfNotExists($director);
+            $sql = "INSERT INTO movie_director (movie_id, director_id) VALUES (?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$movieID, $directorID]);
+        }
+
+        foreach ($countries as $country) {
+            $countryID = $this->countryModel->createIfNotExists($country);
+            $sql = "INSERT INTO movie_country (movie_id, country_id) VALUES (?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$movieID, $countryID]);
+        }
+
+        foreach ($productionCompanies as $productionCompany) {
+            $productionCompanyID = $this->productionCompanyModel->createIfNotExists($productionCompany['name'], $productionCompany['logo_path'], $productionCompany['origin_country']);
+            $sql = "INSERT INTO movie_production (movie_id, production_company_id) VALUES (?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$movieID, $productionCompanyID]);
         }
 
         return $movieID;

@@ -13,6 +13,9 @@ require 'Controler/MovieControler.php';
 require 'Controler/GameController.php';
 require 'Model/MovieModel.php';
 require 'Model/GenreModel.php';
+require 'Model/DirectorModel.php';
+require 'Model/CountryModel.php';
+require 'Model/ProductionCompanyModel.php';
 
 
 // Création d'une instance du routeur

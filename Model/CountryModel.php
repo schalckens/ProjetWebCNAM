@@ -36,4 +36,21 @@ class CountryModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
     }
+
+    public function findByName($name) {
+        $sql = "SELECT * FROM country WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$name]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createIfNotExists($name) {
+        $country = $this->findByName($name);
+        if ($country) {
+            return $country['id'];
+        } else {
+            $this->create($name);
+            return $this->db->lastInsertId();
+        }
+    }
 }
