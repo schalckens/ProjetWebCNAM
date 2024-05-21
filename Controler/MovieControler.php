@@ -42,7 +42,16 @@ class MovieControler
 
         echo json_encode($movie);
 
-        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $moviePath, $movie['original_language'], $movie['genres'], $movie['directors'], $movie['countries'], $movie['production_companies']);
+        $success = $this->movieModel->create($movie['title'], 
+        $movie['release_date'],
+        $movie['overview'], 
+        $moviePath, 
+        $movie['original_language'], 
+        $movie['genres'], 
+        $movie['directors'], 
+        $movie['countries'], 
+        $movie['production_companies'],
+        $movie['actors']);
 
         if (!$success) {
             throw new \Exception('Erreur lors de l\'ajout du film');
@@ -83,6 +92,12 @@ class MovieControler
         }
 
         echo json_encode($movies);
+    }
+
+    public function getMovieDetails($input)
+    {
+        $movie = $this->movieModel->getMovieWithDetailsByName($input);
+        return $movie;
     }
 
     public function getAllMovies()

@@ -16,6 +16,7 @@ require 'Model/GenreModel.php';
 require 'Model/DirectorModel.php';
 require 'Model/CountryModel.php';
 require 'Model/ProductionCompanyModel.php';
+require 'Model/ActorModel.php';
 
 
 // Création d'une instance du routeur
@@ -141,6 +142,12 @@ $router->addRoute('GET', '/gameMovie/search/:userInput', function ($userInput) u
     checkUserLoggedIn();
     $inputDecoded = urldecode($userInput);
     $movieController->getMoviesByInput($inputDecoded);
+});
+
+$router->addRoute('GET', '/gameMovie/getMovieDetails/:userInput', function ($userInput) use ($movieController) {
+    checkUserLoggedIn();
+    $inputDecoded = urldecode($userInput);
+    echo json_encode($movieController->getMovieDetails($inputDecoded));
 });
 
 $router->addRoute('GET', '/gameMovie/compareMovie/:movieName', function ($movieName) use ($gameController) {

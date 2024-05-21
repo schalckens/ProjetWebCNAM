@@ -15,7 +15,8 @@ class GameController{
     public function getRandomMovie()
     {
         $movies = $this->movieController->getAllMovies();
-        return $movies[array_rand($movies)];
+        $movie = $movies[array_rand($movies)];
+        return $this->movieController->getMovieDetails($movie['title']);
     }
 
     public function compareMovie($movieName)
