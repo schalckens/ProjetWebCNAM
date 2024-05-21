@@ -56,14 +56,35 @@ require_once 'Includes/Resources.php';
                 if (response === "false") {
                     alert("Dommage, ce n'est pas le bon film.");
                 } else {
+                    var movie = JSON.parse(response);
                     alert("Bravo, vous avez trouvé le bon film !");
-                    $("#randomMovie").text(JSON.parse(response).title);
+                    $("#randomMovie").text(movie.title);
+                    showMovieCard(movie);
                 }
             }
         });
     });
-</script>
 
+    function showMovieCard(movie) {
+        var htmlContent = `<div class="card" style="width: 16rem;">
+            <img class="card-img-top" src="${movie.poster_path}" alt="Movie poster image">
+            <div class="card-body">
+                <h5 class="card-title">Titre : ${movie.title}</h5>
+                <p class="card-text">Résumé : ${movie.overview}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Date de sortie : ${movie.release_date}</li>
+                <li class="list-group-item">Genre : ${movie.movie_genre}</li>
+                <li class="list-group-item">Pays : ${movie.movie_country}</li>
+                <li class="list-group-item">Langue originale : ${movie.original_language}</li>
+                <li class="list-group-item">Réalisateurs : ${movie.movie_director}</li>
+                <li class="list-group-item">Acteurs : ${movie.movie_actors}</li>
+                <li class="list-group-item">Production : ${movie.movie_production}</li>
+            </ul>
+            </div>`;
+        document.getElementById("movieInfo").innerHTML = htmlContent;
+    }
+</script>
 
 <?php
 include 'View/footer.php';
