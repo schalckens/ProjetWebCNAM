@@ -37,4 +37,20 @@ class DirectorModel
         return $stmt->execute([$id]);
     }
 
+    public function findByName($name) {
+        $sql = "SELECT * FROM director WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$name]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createIfNotExists($name) {
+        $director = $this->findByName($name);
+        if ($director) {
+            return $director['id'];
+        } else {
+            $this->create($name);
+            return $this->db->lastInsertId();
+        }
+    }
 }

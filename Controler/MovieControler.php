@@ -42,7 +42,7 @@ class MovieControler
 
         echo json_encode($movie);
 
-        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $moviePath, $movie['original_language'], $movie['genres']);
+        $success = $this->movieModel->create($movie['title'], $movie['release_date'], $movie['overview'] , $moviePath, $movie['original_language'], $movie['genres'], $movie['directors'], $movie['countries'], $movie['production_companies']);
 
         if (!$success) {
             throw new \Exception('Erreur lors de l\'ajout du film');
