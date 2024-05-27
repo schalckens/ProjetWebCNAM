@@ -7,11 +7,11 @@
         <h1>Bienvenue, chers confrères détectives,</h1>
         <p style="font-size:20px">
 
-            Je suis Conan, le détective le plus célèbre de notre génération. Aujourd'hui, je vous invite à rejoindre une mission spéciale sur notre site "Detective du Cinéma". Chaque jour, un nouveau mystère vous attend : un film à découvrir.
+        Je suis Conan, le détective le plus célèbre de notre génération. Aujourd'hui, je vous invite à rejoindre une mission spéciale sur notre site "Detective du Cinéma". Un mystère sans fin vous attend : un film à découvrir.
             <br><br>
-            Votre mission, si vous l'acceptez, est de deviner le film du jour. Entrez le nom de vos suspects... pardon, des films que vous pensez être le bon, et notre système vous donnera les indices nécessaires pour vous rapprocher de la vérité. Des points communs, des éléments partagés, tout sera mis à votre disposition pour vous guider sur la piste du film mystérieux.
+            Votre mission, si vous l'acceptez, est de deviner le film actuel. Entrez le nom de vos suspects... pardon, des films que vous pensez être le bon, et notre système vous donnera les indices nécessaires pour vous rapprocher de la vérité. Des points communs, des éléments partagés, tout sera mis à votre disposition pour vous guider sur la piste du film mystérieux. Cependant, chaque nouvelle tentative remplace les indices précédents, alors faites travailler votre mémoire ou préparez votre carnet pour prendre des notes.
             <br><br>
-            Utilisez votre esprit de déduction, votre passion pour le cinéma, et surtout, votre perspicacité pour résoudre ces énigmes cinématographiques quotidiennes. Saurez-vous démasquer le film du jour avant que le temps ne s'écoule ?
+            Utilisez votre esprit de déduction, votre passion pour le cinéma, et surtout, votre perspicacité pour résoudre ces énigmes cinématographiques. Lorsque vous trouvez le bon film, un nouveau mystère commence. Saurez-vous démasquer le film avant que le temps ne s'écoule ?
             <br><br>
             <b>
                 Préparez-vous, détectives, et plongez dans l'aventure du "Detective du Cinéma". Que la chasse commence !

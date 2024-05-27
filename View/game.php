@@ -4,9 +4,9 @@ include 'View/header.php';
 
 <body>
     <div style="margin: 2% 15% 5% 15%">
-        <h1>Le Mystère du Film du Jour</h1>
+        <h1>Le Mystère du Film</h1>
         <p>Bienvenue, détectives cinéphiles,</p>
-        <p>Chaque jour, un nouveau mystère vous attend. Votre mission, si vous l'acceptez, est de deviner le film du jour. Entrez le titre du film que vous pensez être le bon, et nous vous donnerons des indices pour vous guider vers la solution. Cependant, chaque nouvelle tentative remplace les indices précédents, alors faites travailler votre mémoire ou préparez votre carnet pour prendre des notes. Utilisez votre sens de la déduction et votre connaissance du cinéma pour résoudre l'énigme. Bonne chance !</p>
+        <p>Un mystère sans fin vous attend. Votre mission, si vous l'acceptez, est de deviner le film actuel. Entrez le titre du film que vous pensez être le bon, et nous vous donnerons des indices pour vous guider vers la solution. Cependant, chaque nouvelle tentative remplace les indices précédents, alors faites travailler votre mémoire ou préparez votre carnet pour prendre des notes. Lorsque vous trouvez le bon film, un nouveau mystère commence. Utilisez votre sens de la déduction et votre connaissance du cinéma pour résoudre l'énigme. Bonne chance !</p>
         <label for="film-guess"><h2>Entrez le titre du film :<h2></label>
         <input type="text" name="movieName" id="inputMovie" placeholder="Nom de film">
         <select class="form-select form-select-lg mb-3" id="movieTitles" size="5"></select>
