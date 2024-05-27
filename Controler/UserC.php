@@ -80,22 +80,22 @@ class UserC
         try {
             // Paramètres du serveur d'envoi
             $mail->isSMTP();
-            $mail->Host = 'localhost'; // à remplacer
-            $mail->SMTPAuth = false;
-            // $mail->Username = ''; // À remplacer par nom d'utilisateur SMTP
-            // $mail->Password = ''; // À remplacer par mot de passe SMTP
-            $mail->SMTPSecure = false;
-            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 25;
+            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net'; // à remplacer
+            $mail->SMTPAuth = true;
+            $mail->Username = 'detective-du-cinema@alwaysdata.net'; // À remplacer par nom d'utilisateur SMTP
+            $mail->Password = 'Azerty123456789$'; // À remplacer par mot de passe SMTP
+            //$mail->SMTPSecure = false;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
 
             // Destinataires
-            $mail->setFrom('a@changer.com', 'Mailer');
+            $mail->setFrom('detective-du-cinema@alwaysdata.net', 'Mailer');
             $mail->addAddress($email);
 
             // Contenu de l'email
             $mail->isHTML(true);
             $mail->Subject = 'Vérifiez votre adresse email';
-            $verificationLink = 'http://projetwebcnam/verify/' . $verificationToken;
+            $verificationLink = 'http://detective-du-cinema.alwaysdata.net/verify/' . $verificationToken;
             $mail->Body = 'Veuillez cliquer sur ce lien pour vérifier votre adresse email: <a href="' . $verificationLink . '">' . $verificationLink . '</a>';
 
             $mail->send();
@@ -126,22 +126,22 @@ class UserC
         try {
             // Paramètres du serveur d'envoi
             $mail->isSMTP();
-            $mail->Host = 'localhost'; // à remplacer
-            $mail->SMTPAuth = false;
-            // $mail->Username = ''; // À remplacer par nom d'utilisateur SMTP
-            // $mail->Password = ''; // À remplacer par mot de passe SMTP
-            $mail->SMTPSecure = false;
-            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 25;
+            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net'; // à remplacer
+            $mail->SMTPAuth = true;
+            $mail->Username = 'detective-du-cinema@alwaysdata.net'; // À remplacer par nom d'utilisateur SMTP
+            $mail->Password = 'Azerty123456789$'; // À remplacer par mot de passe SMTP
+            //$mail->SMTPSecure = false;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
 
             // Destinataires
-            $mail->setFrom('a@changer.com', 'Mailer');
+            $mail->setFrom('detective-du-cinema@alwaysdata.net', 'Mailer');
             $mail->addAddress($email);
 
             // Contenu de l'email
             $mail->isHTML(true);
             $mail->Subject = 'Vérifiez votre adresse email';
-            $resetLink = "http://projetwebcnam/resetPassword/" . $token;
+            $resetLink = "http://detective-du-cinema.alwaysdata.net/resetPassword/" . $token;
             $mail->Body = 'Veuillez cliquer sur ce lien pour définir votre nouveau mot de passe: <a href="' . $resetLink . '">' . $resetLink . '</a>';
 
             $mail->send();
