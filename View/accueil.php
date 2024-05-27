@@ -18,7 +18,7 @@
             </b>
         </p>
         <div class="container" style="width:100%; display:flex; justify-content:center; align-items:center; overflow:hidden;">
-            <img src="View\imgs\c2.jpg" style="width:100%; height:100%;">
+            <img src="View/imgs/c2.jpg" alt="Conan" style="width:100%; height:100%;">
         </div>
     </div>
 </main>
