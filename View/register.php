@@ -1,7 +1,7 @@
 <?php
 include 'View/header.php';
 ?>
-<div class="container">
+<div style="margin: 2% 15% 5% 15%">
     <h2> Inscrivez-vous !</h2>
     <form method="POST" action="/register" id="form">
         <div class="input-group mb-3">
@@ -22,9 +22,7 @@ include 'View/header.php';
         <div id="passwordRequirements"></div>
         <button type="submit" class="btn btn-outline-secondary">Créer un compte</button>
     </form>
-<div>
-<div class="container">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function validatePassword() {
             var value = $('#password').val();

@@ -2,7 +2,7 @@
     include 'View/header.php';
 ?>
 
-<div class="container">
+<div style="margin: 2% 15% 5% 15%">
     <h2>Modifier l'Utilisateur</h2>
     <form action="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>" method="post" id="form">
         <div class="input-group mb-3">
@@ -28,7 +28,7 @@
     </form>
 </div>
 
-<div class="container">
+<div style="margin: 2% 15% 5% 15%">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function validatePassword() {

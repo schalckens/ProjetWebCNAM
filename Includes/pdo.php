@@ -2,10 +2,10 @@
 class PdoProjetWeb
 {
 
-    private static $serveur = 'mysql:host=localhost';
-    private static $bdd = 'dbname=projetweb';
-    private static $user = 'projetweb';
-    private static $mdp = 'projetweb';
+    private static $serveur = 'mysql:host=mysql-detective-du-cinema.alwaysdata.net';
+    private static $bdd = 'dbname=detective-du-cinema_projetweb';
+    private static $user = '360531';
+    private static $mdp = 'Azerty123456789$';
     private static $monPdo;
     private static $monPdoProjetWeb = null;
 
