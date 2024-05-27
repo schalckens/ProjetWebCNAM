@@ -40,7 +40,7 @@ class MovieControler
         $movie = TMDB::getMovie($id);
         $moviePath = 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'];
 
-        echo json_encode($movie);
+        //echo json_encode($movie);
 
         $success = $this->movieModel->create($movie['title'], 
         $movie['release_date'],
@@ -56,7 +56,8 @@ class MovieControler
         if (!$success) {
             throw new \Exception('Erreur lors de l\'ajout du film');
         }
-        $this->manageMovies();
+        header('Location: /manageMovie');
+        exit();
     }
 
     public function deleteMovie($id)

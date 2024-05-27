@@ -33,12 +33,20 @@ class UserModel
     }
 
     // Met à jour les informations d'un utilisateur existant, y compris le mot de passe hashé.
-    public function update($id, $username, $mail, $isAdmin, $password)
-    {
-        $sql = "UPDATE user SET username = ?, mail = ?, isAdmin = ?, password = ? WHERE id = ?";
+    public function update($id, $username, $mail, $isAdmin, $password, $isVerified)
+{
+    // Si le mot de passe n'est pas vide, on le met à jour
+    if (!empty($password)) {
+        $sql = "UPDATE user SET username = ?, mail = ?, isAdmin = ?, password = ?, is_verified = ? WHERE id = ?";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$username, $mail, $isAdmin, password_hash($password, PASSWORD_DEFAULT), $id]);
+        return $stmt->execute([$username, $mail, $isAdmin, password_hash($password, PASSWORD_DEFAULT), $isVerified, $id]);
+    } else {
+        // Si le mot de passe est vide, on ne le met pas à jour
+        $sql = "UPDATE user SET username = ?, mail = ?, isAdmin = ?, is_verified = ? WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$username, $mail, $isAdmin, $isVerified, $id]);
     }
+}
 
     // Supprime un utilisateur de la base de données par son ID.
     public function delete($id)
