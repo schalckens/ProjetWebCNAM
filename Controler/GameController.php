@@ -33,9 +33,54 @@ class GameController{
         if ($compareData['title'] === 'match') {
             $_SESSION['randomMovie'] = $this->getRandomMovie();
             $compareData['debugRandomMovie'] = $_SESSION['randomMovie']['title'];
+        } else{
+
+            foreach ($comparedMovie['actors'] as $actor) {
+                if (in_array($actor, $randomMovie['actors'])) {
+                    $compareData['matchedActors'][$actor['name']] = "match";
+                }
+            }
+
+            foreach ($comparedMovie['directors'] as $director) {
+                if (in_array($director, $randomMovie['directors'])) {
+                    $compareData['matchedDirectors'][$director['name']] = "match";
+                }
+            }
+
+            foreach ($comparedMovie['genres'] as $genre) {
+                if (in_array($genre, $randomMovie['genres'])) {
+                    $compareData['matchedGenres'][$genre['name']] = "match";
+                }
+            }
+
+            foreach ($comparedMovie['countries'] as $country) {
+                if (in_array($country, $randomMovie['countries'])) {
+                    $compareData['matchedCountries'][$country['name']] = "match";
+                }
+            }
+
+            foreach ($comparedMovie['production_companies'] as $productionCompany) {
+                if (in_array($productionCompany, $randomMovie['production_companies'])) {
+                    $compareData['matchedProductionCompanies'][$productionCompany['name']] = "match";
+                }
+            }
+
+            $compareData['original_language'] = $randomMovie['original_language'] === $comparedMovie['original_language'] ? 'match' : 'no match';
+
+            $compareDate = $comparedMovie['release_date'];
+            $movieDate = $randomMovie['release_date'];
+
+            if ($compareDate > $movieDate) {
+                $compareData['release_date'] = 'after';
+            } else if ($compareDate < $movieDate) {
+                $compareData['release_date'] = 'before';
+            } else {
+                $compareData['release_date'] = 'same';
+            }
         }
 
         echo json_encode($compareData);
+
     }
 
     public function getCurrentMovie()
