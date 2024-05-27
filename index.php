@@ -181,6 +181,15 @@ $router->addRoute('GET', '/manageMovie/delete/:id', function ($id) use ($movieCo
     $movieController->deleteMovie($id);
 });
 
+// API pour récupérer la liste des utilisateurs
+$router->addRoute('GET', '/api/users', function () use ($userController) {
+    $userController->getAllUsers();
+});
+
+// API pour récupérer un utilisateur par ID
+$router->addRoute('GET', '/api/users/:id', function ($id) use ($userController) {
+    $userController->getUserById($id);
+});
 try {
     $router->matchRoute();
 } catch (Exception $e) {

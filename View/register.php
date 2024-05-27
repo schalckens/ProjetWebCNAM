@@ -24,7 +24,7 @@ include 'View/header.php';
     </form>
 <div>
 <div class="container">
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function validatePassword() {
             var value = $('#password').val();
