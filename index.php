@@ -151,8 +151,14 @@ $router->addRoute('GET', '/gameMovie/getMovieDetails/:userInput', function ($use
 });
 
 $router->addRoute('GET', '/gameMovie/compareMovie/:movieName', function ($movieName) use ($gameController) {
+    checkUserLoggedIn();
     $movieNameDecoded = urldecode($movieName);
     $gameController->compareMovie($movieNameDecoded);
+});
+
+$router->addRoute('GET', '/gameMovie/getCurrentMovie', function () use ($gameController) {
+    checkUserLoggedIn();
+    echo json_encode($gameController->getCurrentMovie());
 });
 
 // Ajoute un film
