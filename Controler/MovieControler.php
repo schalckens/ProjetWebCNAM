@@ -53,9 +53,6 @@ class MovieControler
         $movie['production_companies'],
         $movie['actors']);
 
-        if (!$success) {
-            throw new \Exception('Erreur lors de l\'ajout du film');
-        }
         header('Location: /manageMovie');
         exit();
     }
