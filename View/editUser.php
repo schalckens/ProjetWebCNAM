@@ -24,15 +24,23 @@
             <input type="password" name="password" class="form-control" placeholder="Mot de passe"
                 aria-label="Mot de passe" aria-describedby="basic-addon1" id="password">
         </div>
+        <div  class="form-check">
+            <label class="form-check-label" for="is_verified">Mail vérifié:</label>
+            <input class="form-check-input"  type="checkbox" id="is_verified" name="is_verified" <?php echo $user['is_verified'] ? 'checked' : ''; ?>>
+        </div>
         <button type="submit" class="btn btn-outline-secondary">Mettre à jour</button>
     </form>
 </div>
 
 <div style="margin: 2% 15% 5% 15%">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+<script>
         function validatePassword() {
             var value = $('#password').val();
+            if (value === '') {
+                // Si le champ mot de passe est vide, ne pas valider et considérer comme valide 
+                return true;
+            }
             var isPasswordValid = true;
             var errorMessage = '<br><h4>Le mot de passe doit suivre les règles suivantes : </h4>';
 
@@ -72,7 +80,6 @@
         $('#password').on('input', validatePassword);
         $('#form').on('submit', function (e) {
             if (!validatePassword()) {
-                
                 e.preventDefault();
             }
         });

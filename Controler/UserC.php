@@ -289,8 +289,8 @@ class UserC
             $mail = $_POST['mail'] ?? null;
             $isAdmin = isset ($_POST['isAdmin']) ? 1 : 0;
             $password = $_POST['password'] ?? null;
-
-            $this->userModel->update($id, $username, $mail, $isAdmin, $password);
+            $isVerified = isset ($_POST['is_verified']) ? 1 : 0;
+            $this->userModel->update($id, $username, $mail, $isAdmin, $password, $isVerified);
 
             header('Location: /manageUser');
             exit();
