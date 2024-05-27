@@ -2,7 +2,7 @@
 include 'View/header.php';
 ?>
 
-<div class="container">
+<div class="container"  data-bs-theme="dark">
     <h2>Gérer les utilisateurs</h2>
 
     <!-- Formulaire pour ajouter un nouvel utilisateur -->
@@ -38,7 +38,7 @@ include 'View/header.php';
     <!-- Affichage de la liste des utilisateurs existants -->
     <section>
         <h3>Liste des Utilisateurs</h3>
-        <table class="table table-info">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
