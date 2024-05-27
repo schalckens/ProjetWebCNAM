@@ -56,7 +56,8 @@ class MovieControler
         if (!$success) {
             throw new \Exception('Erreur lors de l\'ajout du film');
         }
-        $this->manageMovies();
+        header('Location: /manageMovie');
+        exit();
     }
 
     public function deleteMovie($id)
