@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `actor` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `profile_path` varchar(255),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
   unique (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

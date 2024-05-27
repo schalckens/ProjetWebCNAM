@@ -21,13 +21,26 @@ class GameController{
 
     public function compareMovie($movieName)
     {
-        $randomMovie = $_SESSION['randomMovie']['title'];
-        if ($movieName === $randomMovie) {
+        $randomMovie = $_SESSION['randomMovie'];
+        $comparedMovie = $this->movieController->getMovieDetails($movieName);
+
+        $compareData = [
+            'title' => $movieName === $randomMovie['title'] ? 'match' : 'no match',
+            'debugRandomMovie' => $randomMovie['title'],
+        ];
+
+
+        if ($compareData['title'] === 'match') {
             $_SESSION['randomMovie'] = $this->getRandomMovie();
-            echo json_encode($_SESSION['randomMovie']);
-        } else {
-            echo "false";
+            $compareData['debugRandomMovie'] = $_SESSION['randomMovie']['title'];
         }
+
+        echo json_encode($compareData);
+    }
+
+    public function getCurrentMovie()
+    {
+        return $_SESSION['randomMovie'];
     }
 
 }
