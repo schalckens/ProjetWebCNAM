@@ -25,6 +25,18 @@ class MovieModel
 
     public function create($title, $releaseDate, $overview, $posterPath, $originalLanguage, $genres, $directors, $countries, $productionCompanies, $actors)
     {
+        $sql = "SELECT COUNT(*) FROM movie WHERE title = ? AND release_date = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$title, $releaseDate]);
+        $count = $stmt->fetchColumn();
+
+        if ($count > 0) {
+            // Movie with the same name and date already exists
+            echo '<script type="text/javascript">alert("Movie already in the database!");</script>';
+            return false;
+        }
+
+        try{
         $sql = "INSERT INTO movie (title, release_date, overview, poster_path, original_language) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage]);
@@ -67,6 +79,11 @@ class MovieModel
 
         return $movieID;
     }
+    catch(Exception $e){
+        error_log($e->getMessage());
+        return false;
+    }
+    }
 
     public function read($id)
     {
@@ -77,7 +94,7 @@ class MovieModel
     }
 
     public function update($id, $title, $releaseDate, $overview, $posterPath, $originalLanguage) 
-    {
+    { 
         $sql = "UPDATE movie SET title = ?, release_date = ?, overview = ?, poster_path = ?, original_language = ? WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$title, $releaseDate, $overview, $posterPath, $originalLanguage, $id]);
