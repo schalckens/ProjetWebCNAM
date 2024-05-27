@@ -2,35 +2,35 @@
     include 'View/header.php';
 ?>
 
-<main>
+<main style="margin: 2% 15% 5% 15%">
     <h1>Back Office</h1>
     <section>
         <h2>Gestion des films</h2>
     </section>
 
-<form method="POST" action="/manageMovie">
-    <input type="text" name="movieName" placeholder="Nom de film" required>
-    <button type="submit">Rechercher</button>
-</form>
+    <form method="POST" action="/manageMovie">
+        <input type="text" name="movieName" placeholder="Nom de film" required>
+        <button type="submit">Rechercher</button>
+    </form>
 
-<a href="/manageMovie/clearSearch">Clear search</a>
+    <a href="/manageMovie/clearSearch">Clear search</a>
 
-<?php
-if (isset($_SESSION['movieSearch']) && !empty($_SESSION['movieSearch']))
-{
-    echo '<ul>';
-    foreach ($_SESSION['movieSearch'] as $movie) {
-        echo '<li>';
-        echo $movie->title . ' ' . $movie->release_date . ' ' . $movie->original_language . '<br>'; 
-        echo '<img src="https://image.tmdb.org/t/p/w500/' . $movie->poster_path . '" width="100">' . '<br>';
-        echo '<a href="/manageMovie/add/' . htmlspecialchars($movie->id) . '">Add movie</a>';
-        echo '</li>';
+    <?php
+    if (isset($_SESSION['movieSearch']) && !empty($_SESSION['movieSearch']))
+    {
+        echo '<ul>';
+        foreach ($_SESSION['movieSearch'] as $movie) {
+            echo '<li>';
+            echo $movie->title . ' ' . $movie->release_date . ' ' . $movie->original_language . '<br>'; 
+            echo '<img src="https://image.tmdb.org/t/p/w500/' . $movie->poster_path . '" width="100">' . '<br>';
+            echo '<a href="/manageMovie/add/' . htmlspecialchars($movie->id) . '">Add movie</a>';
+            echo '</li>';
+        }
+        echo '</ul>';
     }
-    echo '</ul>';
-}
-?>
+    ?>
 
-<section>
+    <section>
         <h2>Liste des films</h2>
         <table>
             <thead>

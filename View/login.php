@@ -2,7 +2,7 @@
 include 'View/header.php';
 ?>
 
-<div class="container">
+<div style="margin: 2% 15% 5% 15%">
     <h2> Connectez-vous !</h2>
     <form method="POST" action="/login">
         <div class="input-group mb-3">

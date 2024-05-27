@@ -2,7 +2,7 @@
 include 'View/header.php';
 ?>
 
-<div class="container"  data-bs-theme="dark">
+<div data-bs-theme="dark" style="margin: 2% 15% 5% 15%">
     <h2>Gérer les utilisateurs</h2>
 
     <!-- Formulaire pour ajouter un nouvel utilisateur -->
