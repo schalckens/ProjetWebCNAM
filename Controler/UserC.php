@@ -310,4 +310,23 @@ class UserC
         exit();
     }
 
+    public function getAllUsers()
+    {
+        $users = $this->userModel->getAllUsers();
+        header('Content-Type: application/json');
+        echo json_encode($users);
+    }
+
+    public function getUserById($id)
+    {
+        $user = $this->userModel->read($id);
+        if ($user) {
+            header('Content-Type: application/json');
+            echo json_encode($user);
+        } else {
+            header('HTTP/1.1 404 Not Found');
+            echo json_encode(['message' => 'Utilisateur non trouvé']);
+        }
+    }
+
 }
