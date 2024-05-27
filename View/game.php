@@ -2,10 +2,6 @@
 include 'View/header.php';
 ?>
 
-<?php
-echo '<div id="randomMovie">' . $_SESSION["randomMovie"]["title"] . '</div>';
-?>
-
 <body>
     <input type="text" name="movieName" id="inputMovie" placeholder="Nom de film">
     <select class="form-select form-select-lg mb-3" id="movieTitles" size="5"></select>
@@ -17,6 +13,8 @@ require_once 'Includes/Resources.php';
 ?>
 
 <script>
+    var currentMovie;
+
     $("#inputMovie").on("input", function () {
         var movieName = $("#inputMovie").val();
         if (movieName === "") {
@@ -47,19 +45,37 @@ require_once 'Includes/Resources.php';
         });
     });
 
+    $('#movieTitles').on('click', function() {
+        var movieName = $(this).val();
+        $.ajax({
+            url: "/gameMovie/getMovieDetails/" + movieName,
+            method: "GET",
+            success: function(response) {
+                try {
+                    var movie = JSON.parse(response);
+                    console.log(movie);
+                    showMovieCard(movie);
+                } catch (error) {
+                    console.error("Invalid JSON format:", error);
+                }
+            }
+        });
+    });
+
     $('#movieTitles').on('change', function () {
         var movieName = $(this).val();
         $.ajax({
             url: "/gameMovie/compareMovie/" + movieName,
             method: "GET",
             success: function (response) {
-                if (response === "false") {
-                    alert("Dommage, ce n'est pas le bon film.");
-                } else {
-                    var movie = JSON.parse(response);
+                compareData = JSON.parse(response);
+                console.log(compareData)
+                if(compareData.title == 'match')
+                {
                     alert("Bravo, vous avez trouvé le bon film !");
-                    $("#randomMovie").text(movie.title);
-                    showMovieCard(movie);
+                }
+                else{
+                    alert("Dommage, ce n'est pas le bon film.");
                 }
             }
         });
@@ -74,6 +90,7 @@ require_once 'Includes/Resources.php';
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Date de sortie : ${movie.release_date}</li>
+                <li class="list-group-item">Genres : 
                 <li class="list-group-item">Genre : ${movie.movie_genre}</li>
                 <li class="list-group-item">Pays : ${movie.movie_country}</li>
                 <li class="list-group-item">Langue originale : ${movie.original_language}</li>

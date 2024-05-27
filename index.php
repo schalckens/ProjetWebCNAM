@@ -151,8 +151,14 @@ $router->addRoute('GET', '/gameMovie/getMovieDetails/:userInput', function ($use
 });
 
 $router->addRoute('GET', '/gameMovie/compareMovie/:movieName', function ($movieName) use ($gameController) {
+    checkUserLoggedIn();
     $movieNameDecoded = urldecode($movieName);
     $gameController->compareMovie($movieNameDecoded);
+});
+
+$router->addRoute('GET', '/gameMovie/getCurrentMovie', function () use ($gameController) {
+    checkUserLoggedIn();
+    echo json_encode($gameController->getCurrentMovie());
 });
 
 // Ajoute un film
@@ -181,6 +187,15 @@ $router->addRoute('GET', '/manageMovie/delete/:id', function ($id) use ($movieCo
     $movieController->deleteMovie($id);
 });
 
+// API pour récupérer la liste des utilisateurs
+$router->addRoute('GET', '/api/users', function () use ($userController) {
+    $userController->getAllUsers();
+});
+
+// API pour récupérer un utilisateur par ID
+$router->addRoute('GET', '/api/users/:id', function ($id) use ($userController) {
+    $userController->getUserById($id);
+});
 try {
     $router->matchRoute();
 } catch (Exception $e) {
