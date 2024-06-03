@@ -26,12 +26,14 @@ class UserC
             if ($username && $mail && $password) {
                 // Vérifie si l'username ou l'email existent déjà
                 if ($this->userModel->usernameExists($username)) {
-                    echo "Ce nom d'utilisateur est déjà pris.";
-                    return;
+                    $_SESSION['error'] = "Ce nom d'utilisateur est déjà pris.";
+                    header("Location: /register");
+                    exit;
                 }
                 if ($this->userModel->emailExists($mail)) {
-                    echo "Un compte avec cette adresse email existe déjà.";
-                    return;
+                    $_SESSION['error'] = "Un compte avec cette adresse email existe déjà.";
+                    header("Location: /register");
+                    exit;
                 }
                 $isAdmin = false; // Par défaut, l'utilisateur n'est pas un administrateur.
                 $this->userModel->create($username, $mail, $isAdmin, $password);
@@ -47,14 +49,18 @@ class UserC
                     // Envoie l'email de vérification
                     $this->sendVerificationEmail($mail, $verificationToken);
 
-                    echo "Veuillez vérifier votre email pour activer votre compte.";
+                    $_SESSION['success'] = "Veuillez vérifier votre email pour activer votre compte.";
                     //header('Location: /accueil'); // Redirige vers la page d'accueil avec un message
                     //exit();
                 } else {
-                    echo "Erreur lors de la création du compte.";
+                    $_SESSION['error'] = "Erreur lors de la création du compte.";
+                    header("Location: /register");
+                    exit;
                 }
             } else {
-                echo "Veuillez remplir tous les champs.";
+                $_SESSION['error'] = "Veuillez remplir tous les champs.";
+                header("Location: /register");
+                exit;
             }
         } else {
             include 'View/register.php';
@@ -99,9 +105,11 @@ class UserC
             $mail->Body = 'Veuillez cliquer sur ce lien pour vérifier votre adresse email: <a href="' . $verificationLink . '">' . $verificationLink . '</a>';
 
             $mail->send();
-            echo 'Le message de vérification a été envoyé. ';
+            $_SESSION['success'] = 'Le message de vérification a été envoyé. ';
         } catch (Exception $e) {
-            echo "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error'] = "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
+            header("Location: /forgotPassword");
+            exit;
         }
     }
 
@@ -116,7 +124,9 @@ class UserC
             // Envoie l'email avec le token
             $this->sendResetEmail($email, $token);
         } else {
-            echo "Le message n'a pas pu être envoyé";
+            $_SESSION['error'] = "Le message n'a pas pu être envoyé";
+            header("Location: /forgotPassword");
+            exit;
         }
     }
 
@@ -192,8 +202,9 @@ class UserC
                 if ($user && password_verify($password, $user['password'])) {
                     // Ajoute une vérification pour voir si l'utilisateur est vérifié
                     if ($user['is_verified'] == 0) {
-                        echo "Votre compte n'a pas été vérifié. Veuillez vérifier votre email.";
-                        return; // Arrête l'exécution de la fonction ici
+                        $_SESSION['error'] = "Votre compte n'a pas été vérifié. Veuillez vérifier votre email.";
+                        header("Location: /login");
+                        exit;
                     }
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
@@ -210,10 +221,14 @@ class UserC
                     }
                     exit(); // bonne pratique après un header
                 } else {
-                    echo "Identifiants incorrects.";
+                    $_SESSION['error'] = "Identifiants incorrects.";
+                    header("Location: /login");
+                    exit;
                 }
             } else {
-                echo "Veuillez remplir tous les champs.";
+                $_SESSION['error'] = "Veuillez remplir tous les champs.";
+                header("Location: /login");
+                exit;
             }
         } else {
             include 'View/login.php';
