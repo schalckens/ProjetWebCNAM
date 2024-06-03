@@ -31,7 +31,6 @@ include 'View/header.php';
                     <option value="1">Oui</option>
                 </select>
             </div>
-            </form>
             <button type="submit" class="btn btn-outline-secondary">Ajouter</button>
         </form>
     </section>
