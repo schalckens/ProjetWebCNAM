@@ -81,9 +81,6 @@ require_once 'Includes/Resources.php';
                 {
                     alert("Bravo, vous avez trouvé le bon film !");
                 }
-                else{
-                    alert("Dommage, ce n'est pas le bon film.");
-                }
             }
         });
     });
@@ -120,22 +117,29 @@ require_once 'Includes/Resources.php';
         
 
         
-        var htmlContent = `<div class="card" style="width: 30rem;">
-            <img class="card-img-top" src="${movie.poster_path}" alt="Movie poster image">
+        var htmlContent = `
+<div class="card" style="width: 60rem;">
+    <div class="row no-gutters">
+        <div class="col-md-6">
+            <img class="card-img-top" src="${movie.poster_path}" alt="Movie poster image" style="width: 100%; height: auto;">
+        </div>
+        <div class="col-md-6">
             <div class="card-body">
-                <h5 class="card-title">Titre : ${movie.title}</h5>
-                <p class="card-text">Résumé : ${movie.overview}</p>
+                <h2 class="card-title">${movie.title}</h2>
+                <p class="card-text" style="font-size: 1rem;">Résumé : ${movie.overview}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Date de sortie : ${movie.release_date} (Your movie came out ${compareData.release_date})</li>
-                <li class="list-group-item">Genres : ${genreList}</li>
-                <li class="list-group-item">Pays : ${countryList}</li>
-                <li class="list-group-item">Langue originale : ${language} </li>
-                <li class="list-group-item">Réalisateurs : ${directorList}</li>
-                <li class="list-group-item">Acteurs : ${actorsList}</li>
-                <li class="list-group-item">Production : ${productionList}</li>
+                <li class="list-group-item" style="font-size: 1rem;">Date de sortie : ${movie.release_date} (This movie came out ${compareData.release_date})</li>
+                <li class="list-group-item" style="font-size: 1rem;">Genres : ${genreList}</li>
+                <li class="list-group-item" style="font-size: 1rem;">Pays : ${countryList}</li>
+                <li class="list-group-item" style="font-size: 1rem;">Langue originale : ${language} </li>
+                <li class="list-group-item" style="font-size: 1rem;">Réalisateurs : ${directorList}</li>
+                <li class="list-group-item" style="font-size: 1rem;">Acteurs : ${actorsList}</li>
+                <li class="list-group-item" style="font-size: 1rem;">Production : ${productionList}</li>
             </ul>
-            </div>`;
+        </div>
+    </div>
+</div>`;
       
         document.getElementById("movieInfo").innerHTML = htmlContent;
     }
