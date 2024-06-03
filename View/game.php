@@ -130,7 +130,7 @@ require_once 'Includes/Resources.php';
                 <li class="list-group-item">Date de sortie : ${movie.release_date} (Your movie came out ${compareData.release_date})</li>
                 <li class="list-group-item">Genres : ${genreList}</li>
                 <li class="list-group-item">Pays : ${countryList}</li>
-                <li class="list-group-item">Langue originale : ${language} ${compareData.original_language}</li>
+                <li class="list-group-item">Langue originale : ${language} </li>
                 <li class="list-group-item">Réalisateurs : ${directorList}</li>
                 <li class="list-group-item">Acteurs : ${actorsList}</li>
                 <li class="list-group-item">Production : ${productionList}</li>
