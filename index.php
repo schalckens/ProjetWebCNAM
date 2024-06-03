@@ -6,10 +6,10 @@ require_once 'Includes/TMDB.php';
 require_once 'Includes/functions.php';
 require_once('vendor/autoload.php');
 
-require 'Controler/UserC.php';
+require 'Controler/UserController.php';
 require 'Model/UserModel.php';
 require 'router.php';
-require 'Controler/MovieControler.php';
+require 'Controler/MovieController.php';
 require 'Controler/GameController.php';
 require 'Model/MovieModel.php';
 require 'Model/GenreModel.php';
