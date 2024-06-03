@@ -169,8 +169,9 @@ class UserController
             if ($user) {
                 // Vérifie que le nouveau mot de passe n'est pas identique à l'ancien
                 if (password_verify($newPassword, $user['password'])) {
-                    echo "Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.";
-                    return; // Arrêter l'exécution si les mots de passe sont identiques
+                    $_SESSION['error'] = "Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.";
+                    header("Location: /resetPassword/" . $token);
+                    exit;
                 }
 
                 $currentTime = new DateTime();
@@ -180,14 +181,19 @@ class UserController
                 if ($currentTime <= $expireTime) {
                     $this->userModel->updateUserPassword($resetRecord['email'], $newPassword);
                     $this->userModel->invalidateResetToken($token);
-                    echo "Votre mot de passe a été réinitialisé avec succès.";
+                    $_SESSION['success'] = "Votre mot de passe a été réinitialisé avec succès.";
                     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 2000);</script>";
+                    exit;
                 } else {
-                    echo 'Le token a expiré';
+                    $_SESSION['error'] = "Le token a expiré";
+                    header("Location: /resetPassword");
+                    exit;
                 }
             }
         } else {
-            echo "Token invalide";
+            $_SESSION['error'] = "Token invalide";
+            header("Location: /resetPassword");
+            exit;
         }
     }
 
