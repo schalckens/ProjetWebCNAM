@@ -7,7 +7,7 @@ use Model\UserModel;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class UserC
+class UserController
 {
     private $userModel;
 

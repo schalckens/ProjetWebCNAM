@@ -5,7 +5,7 @@ namespace Controler;
 use Model\MovieModel;
 use \TMDB;
 
-class MovieControler
+class MovieController
 {
     private $movieModel;
 

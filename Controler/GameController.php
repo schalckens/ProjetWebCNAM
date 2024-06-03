@@ -1,7 +1,7 @@
 <?php
 
 namespace Controler;
-use Controler\MovieControler;
+use Controler\MovieController;
 
 class GameController{
 
@@ -9,7 +9,7 @@ class GameController{
 
     public function __construct()
     {
-        $this->movieController = new MovieControler();
+        $this->movieController = new MovieController();
     }
 
     public function getRandomMovie()
