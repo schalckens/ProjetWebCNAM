@@ -27,7 +27,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     
-                    <a class="navbar-brand" href="/accueil"> <img src="View/imgs/c3.jpg " alt="logo" width="30" height="30"> DetectiveDuCinéma</a>
+                    <a class="navbar-brand" href="/accueil"> <img src="View/imgs/c3.webp " alt="logo" width="30" height="30"> DetectiveDuCinéma</a>
                     <div class="collapse navbar-collapse" id="navbar1">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true): ?>

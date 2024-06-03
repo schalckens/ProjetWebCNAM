@@ -117,24 +117,24 @@ require_once 'Includes/Resources.php';
 
         
         var htmlContent = `
-<div class="card" style="width: 60rem;">
-    <div class="row no-gutters">
-        <div class="col-md-6">
-            <img class="card-img-top" src="${movie.poster_path}" alt="Movie poster image" style="width: 100%; height: auto;">
+<div class="card mb-3" style="width: 100%;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="${movie.poster_path}" class="img-fluid rounded-start" alt="Movie poster image">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card-body">
                 <h2 class="card-title">${movie.title}</h2>
-                <p class="card-text" style="font-size: 1rem;">Résumé : ${movie.overview}</p>
+                <p class="card-text">Résumé : ${movie.overview}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" style="font-size: 1rem;">Date de sortie : ${movie.release_date} (This movie came out ${compareData.release_date})</li>
-                <li class="list-group-item" style="font-size: 1rem;">Genres : ${genreList}</li>
-                <li class="list-group-item" style="font-size: 1rem;">Pays : ${countryList}</li>
-                <li class="list-group-item" style="font-size: 1rem;">Langue originale : ${language} </li>
-                <li class="list-group-item" style="font-size: 1rem;">Réalisateurs : ${directorList}</li>
-                <li class="list-group-item" style="font-size: 1rem;">Acteurs : ${actorsList}</li>
-                <li class="list-group-item" style="font-size: 1rem;">Production : ${productionList}</li>
+                <li class="list-group-item">Date de sortie : ${movie.release_date} (This movie came out ${compareData.release_date})</li>
+                <li class="list-group-item">Genres : ${genreList}</li>
+                <li class="list-group-item">Pays : ${countryList}</li>
+                <li class="list-group-item">Langue originale : ${language} </li>
+                <li class="list-group-item">Réalisateurs : ${directorList}</li>
+                <li class="list-group-item">Acteurs : ${actorsList}</li>
+                <li class="list-group-item">Production : ${productionList}</li>
             </ul>
         </div>
     </div>
