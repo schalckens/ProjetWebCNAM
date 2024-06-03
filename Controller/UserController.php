@@ -50,8 +50,8 @@ class UserController
                     $this->sendVerificationEmail($mail, $verificationToken);
 
                     $_SESSION['success'] = "Veuillez vérifier votre email pour activer votre compte.";
-                    //header('Location: /accueil'); // Redirige vers la page d'accueil avec un message
-                    //exit();
+                    header("Location: /register");
+                    exit();
                 } else {
                     $_SESSION['error'] = "Erreur lors de la création du compte.";
                     header("Location: /register");
@@ -105,7 +105,9 @@ class UserController
             $mail->Body = 'Veuillez cliquer sur ce lien pour vérifier votre adresse email: <a href="' . $verificationLink . '">' . $verificationLink . '</a>';
 
             $mail->send();
-            $_SESSION['success'] = 'Le message de vérification a été envoyé. ';
+            $_SESSION['success'] = "Le message de vérification a été envoyé.";
+            header("Location: /register");
+            exit();
         } catch (Exception $e) {
             $_SESSION['error'] = "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
             header("Location: /forgotPassword");
