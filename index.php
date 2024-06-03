@@ -24,9 +24,9 @@ $router = new Router();
 
 
 // Obtention de l'instance du contrôleur
-$userController = new Controler\UserController();
-$movieController = new Controler\MovieController();
-$gameController = new Controler\GameController();
+$userController = new Controller\UserController();
+$movieController = new Controller\MovieController();
+$gameController = new Controller\GameController();
 
 // Définition des routes
 
