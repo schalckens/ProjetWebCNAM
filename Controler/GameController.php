@@ -71,9 +71,9 @@ class GameController{
             $movieDate = $randomMovie['release_date'];
 
             if ($compareDate > $movieDate) {
-                $compareData['release_date'] = 'after';
+                $compareData['release_date'] = 'later';
             } else if ($compareDate < $movieDate) {
-                $compareData['release_date'] = 'before';
+                $compareData['release_date'] = 'earlier';
             } else {
                 $compareData['release_date'] = 'same';
             }

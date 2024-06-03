@@ -88,68 +88,35 @@ require_once 'Includes/Resources.php';
         });
     });
 
+    function generateList(items, matchedItems) {
+        var list = "<ul>";
+        items.forEach(function(item) {
+            var match = "";
+            var color = "red";
+            if(matchedItems !== undefined && matchedItems[item.name] !== undefined) {
+                match = "match";
+                color = "green";
+            }
+            list += "<li style='color: " + color + ";'>" + item.name + "</li>";
+        });
+        list += "</ul>";
+        return list;
+    }
+
     function showMovieCard(movie) {
 
-        var actorsList = "<ul>";
-            movie.actors.forEach(function(actor) {
-                var match = "";
-                if(compareData.matchedActors !== undefined && compareData.matchedActors[actor.name] !== undefined)
-                {
-                    match = "match";
-                }
+        var actorsList = generateList(movie.actors, compareData.matchedActors);
 
-                actorsList += "<li>" + actor.name + " (" + match + ")" + "</li>";
-            });
-            actorsList += "</ul>";
+        var genreList = generateList(movie.genres, compareData.matchedGenres);
 
-        var genreList = "<ul>";
-            movie.genres.forEach(function(genre) {
-                var match = "";
-                if(compareData.matchedGenres !== undefined && compareData.matchedGenres[genre.name] !== undefined)
-                {
-                    match = "match";
-                }
-
-                genreList += "<li>" + genre.name + " (" + match + ")" + "</li>";
-            });
-            genreList += "</ul>";
-
-        var countryList = "<ul>";
-            movie.countries.forEach(function(country) {
-                var match = "";
-                if(compareData.matchedCountries !== undefined && compareData.matchedCountries[country.name] !== undefined)
-                {
-                    match = "match";
-                }
-
-                countryList += "<li>" + country.name + " (" + match + ")" + "</li>";
-            });
-            countryList += "</ul>";
+        var countryList = generateList(movie.countries, compareData.matchedCountries);
         
         
-        var directorList = "<ul>";
-            movie.directors.forEach(function(director) {
-                var match = "";
-                if(compareData.matchedDirectors !== undefined && compareData.matchedDirectors[director.name] !== undefined)
-                {
-                    match = "match";
-                }
+        var directorList = generateList(movie.directors, compareData.matchedDirectors);
 
-                directorList += "<li>" + director.name + " (" + match + ")" + "</li>";
-            });
-            directorList += "</ul>";
+        var productionList = generateList(movie.production_companies, compareData.matchedProductionCompanies);
 
-        var productionList = "<ul>";
-            movie.production_companies.forEach(function(production) {
-                var match = "";
-                if(compareData.matchedProductionCompanies !== undefined && compareData.matchedProductionCompanies[production.name] !== undefined)
-                {
-                    match = "match";
-                }
-                productionList += "<li>" + production.name + " (" + match + ")" + "</li>";
-            });
-            productionList += "</ul>";
-
+        var language = `<span style="color: ${compareData.original_language === "match" ? 'green' : 'red'}">${movie.original_language}</span>`;
         
 
         
@@ -160,10 +127,10 @@ require_once 'Includes/Resources.php';
                 <p class="card-text">Résumé : ${movie.overview}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Date de sortie : ${movie.release_date} (${compareData.release_date})</li>
+                <li class="list-group-item">Date de sortie : ${movie.release_date} (Your movie came out ${compareData.release_date})</li>
                 <li class="list-group-item">Genres : ${genreList}</li>
                 <li class="list-group-item">Pays : ${countryList}</li>
-                <li class="list-group-item">Langue originale : ${movie.original_language} (${compareData.original_language})</li>
+                <li class="list-group-item">Langue originale : ${language} ${compareData.original_language}</li>
                 <li class="list-group-item">Réalisateurs : ${directorList}</li>
                 <li class="list-group-item">Acteurs : ${actorsList}</li>
                 <li class="list-group-item">Production : ${productionList}</li>
