@@ -30,10 +30,8 @@ class GameController{
         ];
 
 
-        if ($compareData['title'] === 'match') {
-            $_SESSION['randomMovie'] = $this->getRandomMovie();
-            $compareData['debugRandomMovie'] = $_SESSION['randomMovie']['title'];
-        } else{
+        
+        {
 
             foreach ($comparedMovie['actors'] as $actor) {
                 if (in_array($actor, $randomMovie['actors'])) {
@@ -77,6 +75,11 @@ class GameController{
             } else {
                 $compareData['release_date'] = 'same';
             }
+        }
+
+        if ($compareData['title'] === 'match') {
+            $_SESSION['randomMovie'] = $this->getRandomMovie();
+            $compareData['debugRandomMovie'] = $_SESSION['randomMovie']['title'];
         }
 
         echo json_encode($compareData);
