@@ -1,6 +1,6 @@
 <?php
 
-namespace Controler;
+namespace Controller;
 
 use DateTime;
 use Model\UserModel;

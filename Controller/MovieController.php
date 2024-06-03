@@ -1,6 +1,6 @@
 <?php
 
-namespace Controler;
+namespace Controller;
 
 use Model\MovieModel;
 use \TMDB;

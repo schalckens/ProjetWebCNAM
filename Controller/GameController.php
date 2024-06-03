@@ -1,7 +1,7 @@
 <?php
 
-namespace Controler;
-use Controler\MovieController;
+namespace Controller;
+use Controller\MovieController;
 
 class GameController{
 
