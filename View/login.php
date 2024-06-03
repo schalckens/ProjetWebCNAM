@@ -22,7 +22,7 @@ if (isset($_SESSION['success'])) {
                 aria-label="Nom d'utilisateur" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">🔒</span>
+            <span class="input-group-text" id="basic-addon2">🔒</span>
             <input type="password" name="password" class="form-control" placeholder="Mot de passe"
                 aria-label="Nom d'utilisateur" aria-describedby="basic-addon1">
         </div>
