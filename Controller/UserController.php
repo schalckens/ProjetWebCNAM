@@ -11,11 +11,13 @@ class UserController
 {
     private $userModel;
 
+    // Constructeur pour initialiser le UserModel
     public function __construct()
     {
         $this->userModel = new UserModel();
     }
 
+    // Inscription d'un nouvel utilisateur
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +26,7 @@ class UserController
             $password = $_POST['password'] ?? null;
 
             if ($username && $mail && $password) {
-                // Vérifie si l'username ou l'email existent déjà
+                // Vérifie si le nom d'utilisateur ou l'email existent déjà
                 if ($this->userModel->usernameExists($username)) {
                     $_SESSION['error'] = "Ce nom d'utilisateur est déjà pris.";
                     header("Location: /register");
@@ -41,9 +43,8 @@ class UserController
                 $user = $this->userModel->getUserByEmail($mail);
                 if ($user) {
                     $userId = $user['id'];
-                    // Génère un token de vérification
+                    // Génère et enregistre un token de vérification
                     $verificationToken = bin2hex(random_bytes(16));
-                    // Enregistre le token dans la base de données pour cet utilisateur
                     $this->userModel->saveVerificationToken($userId, $verificationToken);
 
                     // Envoie l'email de vérification
@@ -67,6 +68,7 @@ class UserController
         }
     }
 
+    // Vérifie l'email via le token
     public function verifyEmail($token)
     {
         $user = $this->userModel->getUserByToken($token);
@@ -79,6 +81,7 @@ class UserController
         }
     }
 
+    // Envoie un email de vérification
     public function sendVerificationEmail($email, $verificationToken)
     {
         $mail = new PHPMailer(true);
@@ -86,11 +89,10 @@ class UserController
         try {
             // Paramètres du serveur d'envoi
             $mail->isSMTP();
-            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net'; // à remplacer
+            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net';
             $mail->SMTPAuth = true;
-            $mail->Username = 'detective-du-cinema@alwaysdata.net'; // À remplacer par nom d'utilisateur SMTP
-            $mail->Password = 'Azerty123456789$'; // À remplacer par mot de passe SMTP
-            //$mail->SMTPSecure = false;
+            $mail->Username = 'detective-du-cinema@alwaysdata.net';
+            $mail->Password = 'Azerty123456789$';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -115,6 +117,7 @@ class UserController
         }
     }
 
+    // Envoie un email pour réinitialiser le mot de passe
     public function sendPasswordResetEmail($email)
     {
 
@@ -132,17 +135,17 @@ class UserController
         }
     }
 
+    // Envoie l'email de réinitialisation du mot de passe
     protected function sendResetEmail($email, $token)
     {
         $mail = new PHPMailer(true);
         try {
             // Paramètres du serveur d'envoi
             $mail->isSMTP();
-            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net'; // à remplacer
+            $mail->Host = 'smtp-detective-du-cinema.alwaysdata.net';
             $mail->SMTPAuth = true;
-            $mail->Username = 'detective-du-cinema@alwaysdata.net'; // À remplacer par nom d'utilisateur SMTP
-            $mail->Password = 'Azerty123456789$'; // À remplacer par mot de passe SMTP
-            //$mail->SMTPSecure = false;
+            $mail->Username = 'detective-du-cinema@alwaysdata.net';
+            $mail->Password = 'Azerty123456789$';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -162,6 +165,8 @@ class UserController
             echo "Le message n'a pas pu être envoyé. Mailer Error: {$mail->ErrorInfo}";
         }
     }
+
+    // Réinitialise le mot de passe via le token
     public function resetPassword($token, $newPassword)
     {
         $resetRecord = $this->userModel->getPasswordResetByToken($token);
@@ -199,6 +204,7 @@ class UserController
         }
     }
 
+    // Connexion de l'utilisateur
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -208,7 +214,7 @@ class UserController
             if ($username && $password) {
                 $user = $this->userModel->findByUsername($username);
                 if ($user && password_verify($password, $user['password'])) {
-                    // Ajoute une vérification pour voir si l'utilisateur est vérifié
+                    // Vérifie si l'utilisateur a vérifié son email
                     if ($user['is_verified'] == 0) {
                         $_SESSION['error'] = "Votre compte n'a pas été vérifié. Veuillez vérifier votre email.";
                         header("Location: /login");
@@ -219,12 +225,12 @@ class UserController
                     $_SESSION['is_admin'] = $user['isAdmin'];
                     $_SESSION["logged_in"] = true;
 
-                    // Vérifier si l'utilisateur est un administrateur
+                    // Redirige selon le type d'utilisateur
                     if ($user['isAdmin']) {
-                        // Redirige vers le back office pour les administrateurs
+                        // pour les administrateurs
                         header('Location: /backoffice');
                     } else {
-                        // Redirige vers la page d'accueil pour les utilisateurs
+                        // pour les utilisateurs
                         header('Location: /game');
                     }
                     exit(); // bonne pratique après un header
@@ -243,6 +249,7 @@ class UserController
         }
     }
 
+    // Déconnexion de l'utilisateur
     public function logout()
     {
         // Efface toutes les données de session
@@ -270,7 +277,7 @@ class UserController
         exit;
     }
 
-
+    // Ajoute un utilisateur
     public function addUser()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -284,8 +291,6 @@ class UserController
             
             $password = $_POST['password'] ?? null;
 
-            // Peut-être checker le format des données ici
-
             $success = $this->userModel->create($username, $mail, $isAdmin, $password);
 
             if ($success) {
@@ -298,6 +303,7 @@ class UserController
         }
     }
 
+    // Gère les utilisateurs
     public function manageUsers()
     {
         $users = $this->userModel->getAllUsers();
@@ -305,6 +311,7 @@ class UserController
         include 'View/manageUser.php';
     }
 
+    // Édite un utilisateur
     public function editUser($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -325,6 +332,7 @@ class UserController
         }
     }
 
+    // Supprime un utilisateur
     public function deleteUser($id)
     {
         $this->userModel->delete($id);
@@ -333,6 +341,7 @@ class UserController
         exit();
     }
 
+    // Récupère tous les utilisateurs
     public function getAllUsers()
     {
         $users = $this->userModel->getAllUsers();
@@ -340,6 +349,7 @@ class UserController
         echo json_encode($users);
     }
 
+    // Récupère un utilisateur par son ID
     public function getUserById($id)
     {
         $user = $this->userModel->read($id);
