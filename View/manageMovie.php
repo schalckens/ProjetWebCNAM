@@ -1,5 +1,5 @@
 <?php
-    include 'View/header.php';
+    include 'View/header.php'; // Inclure l'en-tête de la vue
 ?>
 
 <main style="margin: 2% 15% 5% 15%">
@@ -8,14 +8,17 @@
         <h2>Gestion des films</h2>
     </section>
 
+    <!-- Formulaire de recherche de films -->
     <form method="POST" action="/manageMovie">
         <input type="text" name="movieName" placeholder="Nom de film" required>
         <button type="submit">Rechercher</button>
     </form>
 
+    <!-- Lien pour effacer la recherche -->
     <a href="/manageMovie/clearSearch">Clear search</a>
 
     <?php
+    // Affichage des résultats de la recherche de films
     if (isset($_SESSION['movieSearch']) && !empty($_SESSION['movieSearch']))
     {
         echo '<ul>';
@@ -37,12 +40,13 @@
                 <tr>
                     <th>ID</th>
                     <th>Titre film</th>
-                    <th>Date de release</th>
+                    <th>Date de sortie</th>
                     <th>Langue</th>
                     <th>Poster path</th>
                 </tr>
             </thead>
             <tbody>
+            <!-- Affichage de la liste des films -->
             <?php if (isset($_SESSION['movies']) && !empty($_SESSION['movies'])): ?>
                 <?php foreach ($_SESSION['movies'] as $movie): ?>
                     <tr>
@@ -62,18 +66,17 @@
                             <?php echo htmlspecialchars($movie['poster_path']); ?>
                         </td>
                         <td>
+                            <!-- Lien pour supprimer un film avec confirmation -->
                             <a href="/manageMovie/delete/<?php echo htmlspecialchars($movie['id']); ?>"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?');">Supprimer</a>
                     </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
             </tbody>
-
         </table>
     </section>
-
 </main>
 
 <?php
-    include 'View/footer.php';
+    include 'View/footer.php'; // Inclure le pied de page de la vue
 ?>

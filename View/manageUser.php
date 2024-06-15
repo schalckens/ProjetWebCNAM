@@ -1,5 +1,5 @@
 <?php
-include 'View/header.php';
+include 'View/header.php'; // Inclure l'en-tête de la vue
 ?>
 
 <div data-bs-theme="dark" style="margin: 2% 15% 5% 15%">
@@ -11,20 +11,24 @@ include 'View/header.php';
         <form action="/manageUser/add" method="post" id="form">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">@</span>
+                <!-- Champ de saisie pour le nom d'utilisateur -->
                 <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"
                     aria-label="Nom d'utilisateur" aria-describedby="basic-addon1" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon2">✉️</span>
+                <!-- Champ de saisie pour l'email -->
                 <input type="email" name="mail" class="form-control" placeholder="Email" aria-label="Email"
                     aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon3">🔒</span>
+                <!-- Champ de saisie pour le mot de passe -->
                 <input type="password" name="password" class="form-control" placeholder="Mot de passe"
                     aria-label="Mot de passe" aria-describedby="basic-addon1" id="password">
             </div>
             <div>
+                <!-- Sélection pour définir si l'utilisateur est administrateur -->
                 <label>Administrateur :</label>
                 <select class="form-select" name="isAdmin">
                     <option value="0">Non</option>
@@ -49,6 +53,7 @@ include 'View/header.php';
                 </tr>
             </thead>
             <tbody>
+                <!-- Boucle pour afficher chaque utilisateur -->
                 <?php foreach ($users as $user): ?>
                     <tr>
                         <th scope="row">
@@ -64,8 +69,9 @@ include 'View/header.php';
                             <?php echo $user['isAdmin'] ? 'Oui' : 'Non'; ?>
                         </td>
                         <td>
+                            <!-- Liens pour modifier ou supprimer un utilisateur -->
                             <a href="/manageUser/edit/<?php echo htmlspecialchars($user['id']); ?>">Modifier</a>
-                            <?php if (!isset ($user['isAdmin']) || $user['isAdmin'] == 0): ?>
+                            <?php if (!isset($user['isAdmin']) || $user['isAdmin'] == 0): ?>
                                 <a href="/manageUser/delete/<?php echo htmlspecialchars($user['id']); ?>"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                             <?php endif; ?>
@@ -73,14 +79,16 @@ include 'View/header.php';
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-
         </table>
     </section>
 </div>
+
 <div class="container">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="passwordValidation.js"></script>
+    <!-- Inclusion de jQuery et du script de validation de mot de passe -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="passwordValidation.js"></script>
 </div>
+
 <?php
-include 'View/footer.php';
+include 'View/footer.php'; // Inclure le pied de page de la vue
 ?>

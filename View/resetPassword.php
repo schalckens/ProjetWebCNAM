@@ -1,16 +1,20 @@
 <?php
-    include 'View/header.php';
-// Affichage des messages de session
-if (isset($_SESSION['error'])) {
-    echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
-    unset($_SESSION['error']);
-}
-if (isset($_SESSION['success'])) {
-    echo '<div class="alert alert-success">' . $_SESSION['success'] . '</div>';
-    unset($_SESSION['success']);
-}
+    include 'View/header.php'; // Inclure l'en-tête de la vue
+
+    // Affichage des messages de session
+    if (isset($_SESSION['error'])) {
+        // Afficher le message d'erreur
+        echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+        unset($_SESSION['error']); // Supprimer le message de session après affichage
+    }
+    if (isset($_SESSION['success'])) {
+        // Afficher le message de succès
+        echo '<div class="alert alert-success">' . $_SESSION['success'] . '</div>';
+        unset($_SESSION['success']); // Supprimer le message de session après affichage
+    }
 ?>
 <main style="margin: 2% 15% 5% 15%">
+    <!-- Formulaire de réinitialisation du mot de passe -->
     <form action="/resetPassword" method="POST" id="form">
         <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
         <label for="new_password">Nouveau mot de passe :</label>
@@ -21,6 +25,7 @@ if (isset($_SESSION['success'])) {
         
         <button type="submit">Réinitialiser le mot de passe</button>
     </form>
+    <!-- Inclusion de jQuery et script de validation de mot de passe -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function validatePassword() {
@@ -29,6 +34,7 @@ if (isset($_SESSION['success'])) {
             var isPasswordValid = true;
             var errorMessage = 'Le mot de passe doit suivre les règles suivantes :';
 
+            // Vérification des critères de mot de passe
             if(password !== confirmPassword) {
                 errorMessage += '<br>- Les deux mots de passe doivent correspondre';
                 isPasswordValid = false;
@@ -54,6 +60,7 @@ if (isset($_SESSION['success'])) {
                 isPasswordValid = false;
             }
             if(!isPasswordValid) {
+                // Afficher le message d'erreur si le mot de passe n'est pas valide
                 if ($('.error').length) {
                     $('.error').html(errorMessage);
                 } else {
@@ -66,7 +73,9 @@ if (isset($_SESSION['success'])) {
             }
         }
 
+        // Événement sur la saisie des mots de passe pour valider en temps réel
         $('#new_password, #new_password_c').on('input', validatePassword);
+        // Événement sur la soumission du formulaire pour valider les mots de passe
         $('#form').on('submit', function(e) {
             if(!validatePassword()) {
                 e.preventDefault();
@@ -76,5 +85,5 @@ if (isset($_SESSION['success'])) {
 </main>
 
 <?php
-    include 'View/footer.php';
+    include 'View/footer.php'; // Inclure le pied de page de la vue
 ?>
