@@ -4,6 +4,8 @@
 
 Ce projet web interactif invite les utilisateurs à deviner un film mystère. Les utilisateurs peuvent s'inscrire, se connecter et jouer au jeu. Les administrateurs ont des privilèges supplémentaires pour gérer les utilisateurs et les films via un back-office.
 
+Le site est accessible à l'adresse suivante : [Detective du Cinéma](https://detective-du-cinema.alwaysdata.net/)
+
 ## Connexions
 
 ### Admin
